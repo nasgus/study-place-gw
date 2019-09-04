@@ -1,7 +1,11 @@
 import axios from 'axios'
 
 export default {
-  registration () {
-    axios.get('/registration')
+  async registration (body) {
+    try {
+      return await axios.post('/registration', body)
+    } catch (e) {
+      return e
+    }
   }
 }
