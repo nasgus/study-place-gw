@@ -11,12 +11,20 @@
       div.layout
         input(placeholder="Фамилия").registration-form__input
         input(placeholder="Отчество").registration-form__input
-      button.registration-form__button Зарегистрироваться
+      div.layout
+        button.registration-form__button Зарегистрироваться
+        div.spacer
+        Recaptcha.registration-form__recaptcha
+
 </template>
 
 <script>
+  import Recaptcha from "../Recaptcha";
   export default {
     name: "RegistrationForm",
+    components: {
+      Recaptcha
+    },
     data () {
       return {
         form: {
@@ -59,5 +67,8 @@
     font-weight: 200;
     font-size: 20px;
     line-height: 23px;
+  }
+  .registration-form__recaptcha {
+    margin: 40px 5px;
   }
 </style>
