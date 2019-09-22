@@ -1,9 +1,9 @@
 <template lang="pug">
   div.registration.container.layout
     div.flex.xl9.lg12.md12.layout.ma-auto.registration-content
-      RegistrationForm.flex.xl5.lg6.md5.sm8.ma-auto
+      RegistrationForm.flex.xl5.lg4.md5.sm8.ma-auto
       div.lg8.xl8.md6.registration-illustration
-        img.registration-illustration__img(:src="require('../assets/registration/illustration.png')")
+        img.registration-illustration__img(:src="require('../assets/registration/illustration.svg')")
 
 
 </template>
