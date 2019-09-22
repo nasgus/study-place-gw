@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.registration-form.flex.xl5.lg5
+  div.registration-form
     h3.registration-form__title РЕГИСТРАЦИЯ
     a.registration-form__to-login Уже есть аккаунт?
     form.layout.row
@@ -35,14 +35,15 @@
 </script>
 
 <style scoped>
+
   .registration-form {
-    padding: 0 7%;
+    margin: auto;
   }
 
   .registration-form__input {
     background: #F3F3F3;
     width: 100%;
-    margin: 5px;
+    margin: 10px 5px;
     height: 50px;
     padding-left: 15px;
     font-family: 'Roboto', sans-serif;
@@ -66,7 +67,7 @@
 
   .registration-form__button {
     padding: 15px 50px;
-    margin: 40px 5px;
+    margin: 20px 5px;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 200;
