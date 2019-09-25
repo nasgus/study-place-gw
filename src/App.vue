@@ -14,4 +14,9 @@
   body {
     height: 100%;
   }
+
+  a {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+  }
 </style>
