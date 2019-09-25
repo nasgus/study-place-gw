@@ -7,7 +7,10 @@
       div.header-actions__notifications
         div.header-actions__notifications__red-btn
         img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div.header-actions__profile
+      div.header-actions__profile.layout
+        div.header-actions__profile__text Профиль
+        div.spacer
+        img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
 
 
 </template>
@@ -72,6 +75,17 @@
     width: 200px;
     background: #0055C7;
     border-radius: 10px;
+    padding: 13px 30px;
+    align-items: center;
+
+  }
+
+  .header-actions__profile__text {
+    font-size: 16px;
+    line-height: 20px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
   }
 
 </style>
