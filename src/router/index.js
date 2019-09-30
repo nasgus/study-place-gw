@@ -9,9 +9,14 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'main',
-      component: () => import('../views/Main'),
+      name: 'layout',
+      component: () => import('../views/Layout'),
       children: [
+        {
+          path: '',
+          name: 'main',
+          component: () => import('../views/Main')
+        },
         {
           path: 'registration',
           name: 'registration',

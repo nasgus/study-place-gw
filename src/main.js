@@ -3,8 +3,6 @@ import App from './App.vue'
 import router from '../src/router'
 import store from './store'
 import axios from 'axios'
-import 'vuetify/dist/vuetify.min.css'
-
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
