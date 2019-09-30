@@ -2,7 +2,7 @@
   div.registration-form
     h3.registration-form__title РЕГИСТРАЦИЯ
     a.registration-form__to-login Уже есть аккаунт?
-    form.layout.row
+    form
       input(placeholder="Логин").registration-form__input
       input(placeholder="Пароль").registration-form__input
       input(placeholder="Повторите пароль").registration-form__input

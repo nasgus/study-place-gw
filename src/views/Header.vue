@@ -1,18 +1,15 @@
 <template lang="pug">
-  div
-    header.header.layout
-      img.header-logo(:src="require('../assets/logo.svg')")
-      div.spacer
-      div.header-actions.d-flex.align-center
-        a.header-actions__link Курсы
-        div.header-actions__notifications
-          div.header-actions__notifications__red-btn
-          img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-        div.header-actions__profile.layout
-          div.header-actions__profile__text Профиль
-          div.spacer
-          img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
-    router-view
+  header.header.level
+    img.header-logo.level-left(:src="require('../assets/logo.svg')")
+    div.header-actions.level-right
+      a.header-actions__link Курсы
+      div.header-actions__notifications
+        div.header-actions__notifications__red-btn
+        img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
+      div.header-actions__profile.level
+        div.header-actions__profile__text Профиль
+        div.spacer
+        img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
 
 
 </template>
