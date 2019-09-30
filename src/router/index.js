@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'header',
-      component: () => import('../views/Header'),
+      name: 'layout',
+      component: () => import('../views/Layout'),
       children: [
         {
           path: '',
