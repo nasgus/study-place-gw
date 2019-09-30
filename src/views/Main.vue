@@ -1,17 +1,14 @@
 <template lang="pug">
-  div
-    Header
-    router-view
+  div.container.flex.justify-center
+    div.flex.xl8.lg8
+      h2 Study Space
 </template>
 
 <script>
-  import Header from "./Header";
 
   export default {
     name: "Main",
-    components: {
-      Header
-    }
+    components: {}
   }
 </script>
 

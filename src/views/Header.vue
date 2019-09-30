@@ -1,16 +1,18 @@
 <template lang="pug">
-  header.header.layout
-    img.header-logo(:src="require('../assets/logo.svg')")
-    div.spacer
-    div.header-actions.d-flex.align-center
-      a.header-actions__link Курсы
-      div.header-actions__notifications
-        div.header-actions__notifications__red-btn
-        img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div.header-actions__profile.layout
-        div.header-actions__profile__text Профиль
-        div.spacer
-        img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
+  div
+    header.header.layout
+      img.header-logo(:src="require('../assets/logo.svg')")
+      div.spacer
+      div.header-actions.d-flex.align-center
+        a.header-actions__link Курсы
+        div.header-actions__notifications
+          div.header-actions__notifications__red-btn
+          img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
+        div.header-actions__profile.layout
+          div.header-actions__profile__text Профиль
+          div.spacer
+          img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
+    router-view
 
 
 </template>
