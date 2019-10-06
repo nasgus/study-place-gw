@@ -11,16 +11,24 @@
         div.spacer
         img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
     div.header-actions.level-right(v-else)
-      button.header-actions__login Логин
-      button.header-actions__registration Зарегистрироваться
+      button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
+      button.header-actions__registration Зарегистрироваться\
+    LoginModal(v-if="modalIsOpen")
 
 
 
 </template>
 
 <script>
+  import LoginModal from "../components/header/LoginModal";
   export default {
-    name: "Header"
+    name: "Header",
+    components: {LoginModal},
+    data () {
+      return {
+        modalIsOpen: false
+      }
+    }
   }
 </script>
 
