@@ -1,7 +1,7 @@
 <template lang="pug">
   header.header.level
     img.header-logo.level-left(:src="require('../assets/logo.svg')")
-    div.header-actions.level-right
+    div.header-actions.level-right(v-if="false")
       a.header-actions__link Курсы
       div.header-actions__notifications
         div.header-actions__notifications__red-btn
@@ -10,6 +10,10 @@
         div.header-actions__profile__text Профиль
         div.spacer
         img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
+    div.header-actions.level-right(v-else)
+      button.header-actions__login Логин
+      button.header-actions__registration Зарегистрироваться
+
 
 
 </template>
@@ -86,5 +90,22 @@
     font-family: 'Roboto', sans-serif;
     font-style: normal;
   }
+
+  .header-actions__login, .header-actions__registration {
+    /*width: 80px;*/
+    /*height: 40px;*/
+    border: 1px solid #002D56;
+    border-radius: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin: 0 20px;
+    padding: 10px 20px;
+  }
+  .header-actions__login:hover, .header-actions__registration:hover {
+    background: #002D56;
+    color: #F3F3F3;
+    transition: all .2s;
+  }
+
 
 </style>
