@@ -12,8 +12,8 @@
         img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
     div.header-actions.level-right(v-else)
       button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
-      button.header-actions__registration Зарегистрироваться\
-    LoginModal(v-if="modalIsOpen")
+      button.header-actions__registration Зарегистрироваться
+    LoginModal(:isOpen="isOpen", v-if="modalIsOpen")
 
 
 
@@ -27,6 +27,11 @@
     data () {
       return {
         modalIsOpen: false
+      }
+    },
+    methods: {
+      isOpen () {
+        this.modalIsOpen = !this.modalIsOpen
       }
     }
   }

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.modal-background
+  div.modal-background(@click="isOpen()")
     div.modal-login
       div.modal-login__title Вход
       label E-mail
@@ -16,7 +16,7 @@
   export default {
     name: "LoginModal",
     props: {
-      isOpen: Boolean
+      isOpen: Function
     }
   }
 </script>
