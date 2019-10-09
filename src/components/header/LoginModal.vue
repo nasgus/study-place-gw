@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.modal-background(@click="isOpen()")
+  div.modal-background(@click="setModal(!modalIsOpen)")
     div.modal-login
       div.modal-login__title Вход
       label E-mail
@@ -17,6 +17,14 @@
     name: "LoginModal",
     props: {
       isOpen: Function
+    },
+    methods: {
+      setModal (payload) {
+        this.$store.dispatch('MODAL_IS_OPEN', payload)
+      }
+    },
+    computed: {
+      modalIsOpen () {return this.$store.getters.modalIsOpen}
     }
   }
 </script>

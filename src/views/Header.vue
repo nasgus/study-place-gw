@@ -1,6 +1,6 @@
 <template lang="pug">
   header.header.level
-    img.header-logo.level-left(:src="require('../assets/logo.svg')")
+    img.header-logo.level-left(:src="require('../assets/logo.svg')", @click="$router.push({name: 'main'})")
     div.header-actions.level-right(v-if="false")
       a.header-actions__link Курсы
       div.header-actions__notifications
@@ -11,28 +11,29 @@
         div.spacer
         img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
     div.header-actions.level-right(v-else)
-      button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
-      button.header-actions__registration Зарегистрироваться
-    LoginModal(:isOpen="isOpen", v-if="modalIsOpen")
+      button.header-actions__login(@click="$store.dispatch('MODAL_IS_OPEN', true)") Логин
+      button.header-actions__registration(@click="$router.push({name: 'registration'})") Зарегистрироваться
+    LoginModal(v-if="modalIsOpen")
 
 
 
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   import LoginModal from "../components/header/LoginModal";
   export default {
     name: "Header",
     components: {LoginModal},
     data () {
-      return {
-        modalIsOpen: false
-      }
+      return {}
     },
     methods: {
-      isOpen () {
-        this.modalIsOpen = !this.modalIsOpen
-      }
+    },
+    computed: {
+      ...mapGetters([
+        'modalIsOpen'
+      ])
     }
   }
 </script>
@@ -44,6 +45,10 @@
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px 50px;
+  }
+
+  .header-logo {
+    cursor: pointer;
   }
 
   .header-actions {
