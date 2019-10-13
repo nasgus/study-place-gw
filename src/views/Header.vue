@@ -1,6 +1,7 @@
 <template lang="pug">
   header.header.level
-    img.header-logo.level-left(:src="require('../assets/logo.svg')")
+    router-link(:to="{name: 'main'}")
+      img.header-logo.level-left(:src="require('../assets/logo.svg')")
     div.header-actions.level-right(v-if="false")
       a.header-actions__link Курсы
       div.header-actions__notifications
@@ -14,10 +15,7 @@
       button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
       router-link(:to="{name: 'registration'}")
         button.header-actions__registration Зарегистрироваться
-    LoginModal(:isOpen="isOpen", v-if="modalIsOpen")
-
-
-
+    LoginModal(:isOpen="isOpen", v-show="modalIsOpen")
 </template>
 
 <script>

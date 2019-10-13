@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.modal-background(@click="isOpen()")
+  div.modal-background.login(@click="isOpen()", :class="")
     div.modal-login
       div.modal-login__title Вход
       label E-mail
@@ -22,6 +22,11 @@
 </script>
 
 <style scoped>
+
+  .login {
+    transition: all 2s 1s;
+    opacity: 0;
+  }
 
   .modal-background {
     z-index: 41;
