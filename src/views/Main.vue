@@ -8,7 +8,7 @@
           button.main-text__btn
             div.main-text__btn-text Стать участником
         div.column.is-6
-          img(:src="require('../assets/main/main.gif')")
+          //img(:src="require('../assets/main/main.gif')")
     div.main-footer
       div.container
         div.main-footer__title.has-text-centered Почему стоит присоединиться к нам?
@@ -28,6 +28,10 @@
 </script>
 
 <style scoped>
+  .main {
+    height: 90vh;
+  }
+
   .main-text__title {
     font-size: 90px;
     color: #002D56;
