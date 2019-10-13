@@ -8,13 +8,11 @@
 
 <script>
   import RegistrationForm from "../components/registration/RegistrationForm";
-  import Recaptcha from "../components/Recaptcha";
 
   export default {
     name: "Registration",
     components: {
-      RegistrationForm,
-      Recaptcha
+      RegistrationForm
     },
     data () {
       return {}

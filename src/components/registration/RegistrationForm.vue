@@ -19,12 +19,10 @@
 </template>
 
 <script>
-  import Recaptcha from "../Recaptcha";
 
   export default {
     name: "RegistrationForm",
     components: {
-      Recaptcha
     },
     data() {
       return {

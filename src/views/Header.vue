@@ -12,7 +12,8 @@
         img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
     div.header-actions.level-right(v-else)
       button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
-      button.header-actions__registration Зарегистрироваться
+      router-link(:to="{name: 'registration'}")
+        button.header-actions__registration Зарегистрироваться
     LoginModal(:isOpen="isOpen", v-if="modalIsOpen")
 
 
