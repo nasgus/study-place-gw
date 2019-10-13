@@ -18,7 +18,6 @@
     LoginModal(v-if="modalIsOpen")
 
 
-
 </template>
 
 <script>
@@ -26,14 +25,15 @@
 
   export default {
     name: "Header",
-    components: {LoginModal},
-    data () {
+    components: { LoginModal },
+    data() {
       return {}
     },
-    methods: {
-    },
+    methods: {},
     computed: {
-      modalIsOpen () {return this.$store.getters.modalIsOpen}
+      modalIsOpen() {
+        return this.$store.getters.modalIsOpen
+      }
     }
   }
 </script>
@@ -119,6 +119,7 @@
     margin: 0 20px;
     padding: 10px 20px;
   }
+
   .header-actions__login:hover, .header-actions__registration:hover {
     background: #002D56;
     color: #F3F3F3;

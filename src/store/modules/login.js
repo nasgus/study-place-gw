@@ -6,14 +6,8 @@ export default {
   },
 
   mutations: {
-    [MODAL_IS_OPEN] (state, payload)  {
+    [MODAL_IS_OPEN](state, payload) {
       state.modalIsOpen = payload
-    }
-  },
-
-  actions: {
-    [MODAL_IS_OPEN] ({commit}, payload) {
-      commit('MODAL_IS_OPEN', payload)
     }
   },
 

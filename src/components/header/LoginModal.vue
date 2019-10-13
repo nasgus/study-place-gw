@@ -25,9 +25,7 @@
       }
     },
     computed: {
-      modalIsOpen() {
-        return this.$store.getters.modalIsOpen
-      }
+      modalIsOpen() { return this.$store.getters.modalIsOpen }
     }
   }
 </script>
