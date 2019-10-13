@@ -12,26 +12,28 @@
         div.spacer
         img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
     div.header-actions.level-right(v-else)
-      button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
+      button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
       router-link(:to="{name: 'registration'}")
         button.header-actions__registration Зарегистрироваться
-    LoginModal(:isOpen="isOpen", v-show="modalIsOpen")
+    LoginModal(v-if="modalIsOpen")
+
+
+
 </template>
 
 <script>
   import LoginModal from "../components/header/LoginModal";
+
   export default {
     name: "Header",
     components: {LoginModal},
     data () {
-      return {
-        modalIsOpen: false
-      }
+      return {}
     },
     methods: {
-      isOpen () {
-        this.modalIsOpen = !this.modalIsOpen
-      }
+    },
+    computed: {
+      modalIsOpen () {return this.$store.getters.modalIsOpen}
     }
   }
 </script>
@@ -43,6 +45,10 @@
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px 50px;
+  }
+
+  .header-logo {
+    cursor: pointer;
   }
 
   .header-actions {

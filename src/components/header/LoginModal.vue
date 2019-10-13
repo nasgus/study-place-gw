@@ -1,5 +1,6 @@
 <template lang="pug">
-  div.modal-background.login(@click="isOpen()", :class="")
+  div.modal.is-active
+    div.modal-background(@click="setModal(!modalIsOpen)")
     div.modal-login
       div.modal-login__title Вход
       label E-mail
@@ -17,6 +18,16 @@
     name: "LoginModal",
     props: {
       isOpen: Function
+    },
+    methods: {
+      setModal(payload) {
+        this.$store.commit('MODAL_IS_OPEN', payload)
+      }
+    },
+    computed: {
+      modalIsOpen() {
+        return this.$store.getters.modalIsOpen
+      }
     }
   }
 </script>
@@ -24,16 +35,13 @@
 <style scoped>
 
   .login {
-    transition: all 2s 1s;
-    opacity: 0;
-  }
-
-  .modal-background {
-    z-index: 41;
-    position: fixed;
     display: flex;
     align-items: center;
-
+    position: fixed;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: inherit;
+    z-index: 40;
   }
 
   .modal-login {
