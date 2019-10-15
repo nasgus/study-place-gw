@@ -2,15 +2,24 @@
   header.header.level
     router-link(:to="{name: 'main'}")
       img.header-logo.level-left(:src="require('../assets/logo.svg')")
-    div.header-actions.level-right(v-if="false")
+    div.header-actions.level-right.columns(v-if="true")
       a.header-actions__link Курсы
       div.header-actions__notifications
         div.header-actions__notifications__red-btn
         img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div.header-actions__profile.level
-        div.header-actions__profile__text Профиль
+      div.column
+        span.header-profile
+          div.header-profile__name Anton Mokhonko
+          img.header-profile__photo(:src="require('../assets/profile-photo.jpg')")
+          ul.header-profile__dropdown
+            li one
+            li two
+            li three
+            li four
+            li five
+            li six
+            li seven
         div.spacer
-        img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
     div.header-actions.level-right(v-else)
       button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
       router-link(:to="{name: 'registration'}")
@@ -25,7 +34,7 @@
 
   export default {
     name: "Header",
-    components: { LoginModal },
+    components: {LoginModal},
     data() {
       return {}
     },
@@ -126,5 +135,35 @@
     transition: all .2s;
   }
 
+  .header-profile {
+    display: flex;
+  }
+
+  .header-profile__photo {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .header-profile__name {
+    display: flex;
+    margin: auto 0;
+  }
+
+  .header-profile {
+    cursor: pointer;
+  }
+
+  .header-profile__dropdown {
+    position: absolute;
+    background: white;
+    width: inherit;
+    display: none;
+  }
+
+  .header-profile:hover .header-profile__dropdown {
+    display: block;
+  }
 
 </style>
