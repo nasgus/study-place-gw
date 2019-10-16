@@ -7,19 +7,11 @@
       div.header-actions__notifications
         div.header-actions__notifications__red-btn
         img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div.column
-        span.header-profile
+      div
+        div.header-profile
           div.header-profile__name Anton Mokhonko
-          img.header-profile__photo(:src="require('../assets/profile-photo.jpg')")
-          ul.header-profile__dropdown
-            li one
-            li two
-            li three
-            li four
-            li five
-            li six
-            li seven
-        div.spacer
+          img.header-profile__photo.level-right(:src="require('../assets/profile-photo.jpg')")
+      div.spacer
     div.header-actions.level-right(v-else)
       button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
       router-link(:to="{name: 'registration'}")
@@ -31,10 +23,11 @@
 
 <script>
   import LoginModal from "../components/header/LoginModal";
+  import RightSidebar from "../components/header/RightSidebar";
 
   export default {
     name: "Header",
-    components: {LoginModal},
+    components: {RightSidebar, LoginModal},
     data() {
       return {}
     },
@@ -135,10 +128,6 @@
     transition: all .2s;
   }
 
-  .header-profile {
-    display: flex;
-  }
-
   .header-profile__photo {
     height: 50px;
     width: 50px;
@@ -153,17 +142,14 @@
 
   .header-profile {
     cursor: pointer;
+    display: flex;
   }
 
   .header-profile__dropdown {
     position: absolute;
     background: white;
     width: inherit;
-    display: none;
-  }
 
-  .header-profile:hover .header-profile__dropdown {
-    display: block;
   }
 
 </style>
