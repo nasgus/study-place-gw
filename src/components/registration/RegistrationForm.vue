@@ -1,7 +1,7 @@
 <template lang="pug">
   div.registration-form
     h3.registration-form__title РЕГИСТРАЦИЯ
-    a.registration-form__to-login Уже есть аккаунт?
+    a.registration-form__to-login(@click="$store.commit('MODAL_IS_OPEN', true)") Уже есть аккаунт?
     form
       input(placeholder="Логин").registration-form__input
       input(placeholder="Пароль").registration-form__input

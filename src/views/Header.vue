@@ -1,38 +1,43 @@
 <template lang="pug">
   header.header.level
-    img.header-logo.level-left(:src="require('../assets/logo.svg')")
-    div.header-actions.level-right(v-if="false")
+    router-link(:to="{name: 'main'}")
+      img.header-logo.level-left(:src="require('../assets/logo.svg')")
+    div.header-actions.level-right.columns(v-if="true")
       a.header-actions__link Курсы
       div.header-actions__notifications
         div.header-actions__notifications__red-btn
         img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div.header-actions__profile.level
-        div.header-actions__profile__text Профиль
-        div.spacer
-        img.header-actions__profile__icon(:src="require('../assets/icons/prfile.svg')")
+      div.header-profile
+        div.header-profile__name Anton Mokhonko
+        img.header-profile__photo.level-right(:src="require('../assets/profile-photo.jpg')")
+        img.header-profile__icon(:src="require('../assets/icons/arrow_down.svg')", @click="dropdownActive = !dropdownActive")
+      Dropdown(:isActive="dropdownActive")
+      div.spacer
     div.header-actions.level-right(v-else)
-      button.header-actions__login(@click="modalIsOpen = !modalIsOpen") Логин
+      button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
       router-link(:to="{name: 'registration'}")
         button.header-actions__registration Зарегистрироваться
-    LoginModal(:isOpen="isOpen", v-if="modalIsOpen")
-
+    LoginModal(v-if="modalIsOpen")
 
 
 </template>
 
 <script>
   import LoginModal from "../components/header/LoginModal";
+  import Dropdown from "../components/header/Dropdown";
+
   export default {
     name: "Header",
-    components: {LoginModal},
-    data () {
+    components: {Dropdown, LoginModal},
+    data() {
       return {
-        modalIsOpen: false
+        dropdownActive: false
       }
     },
-    methods: {
-      isOpen () {
-        this.modalIsOpen = !this.modalIsOpen
+    methods: {},
+    computed: {
+      modalIsOpen() {
+        return this.$store.getters.modalIsOpen
       }
     }
   }
@@ -45,6 +50,10 @@
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px 50px;
+  }
+
+  .header-logo {
+    cursor: pointer;
   }
 
   .header-actions {
@@ -87,24 +96,6 @@
 
   }
 
-  .header-actions__profile {
-    height: 50px;
-    width: 200px;
-    background: #0055C7;
-    border-radius: 10px;
-    padding: 13px 30px;
-    align-items: center;
-
-  }
-
-  .header-actions__profile__text {
-    font-size: 16px;
-    line-height: 20px;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-  }
-
   .header-actions__login, .header-actions__registration {
     /*width: 80px;*/
     /*height: 40px;*/
@@ -115,10 +106,31 @@
     margin: 0 20px;
     padding: 10px 20px;
   }
+
   .header-actions__login:hover, .header-actions__registration:hover {
     background: #002D56;
     color: #F3F3F3;
     transition: all .2s;
+  }
+
+  .header-profile__photo {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .header-profile__name {
+    display: flex;
+    margin: auto 0;
+  }
+
+  .header-profile {
+    display: flex;
+  }
+
+  .header-profile__icon {
+    cursor: pointer;
   }
 
 
