@@ -10,12 +10,8 @@
       div.header-profile
         div.header-profile__name Anton Mokhonko
         img.header-profile__photo.level-right(:src="require('../assets/profile-photo.jpg')")
-        img.header-profile__icon(:src="require('../assets/icons/arrow_down.svg')")
-      ul.profile-dropdown
-        li.profile-dropdown__item Дневник
-        li.profile-dropdown__item Календарь
-        li.profile-dropdown__item Курсы
-        li.profile-dropdown__item Настройки
+        img.header-profile__icon(:src="require('../assets/icons/arrow_down.svg')", @click="dropdownActive = !dropdownActive")
+      Dropdown(:isActive="dropdownActive")
       div.spacer
     div.header-actions.level-right(v-else)
       button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
@@ -28,12 +24,15 @@
 
 <script>
   import LoginModal from "../components/header/LoginModal";
+  import Dropdown from "../components/header/Dropdown";
 
   export default {
     name: "Header",
-    components: {LoginModal},
+    components: {Dropdown, LoginModal},
     data() {
-      return {}
+      return {
+        dropdownActive: false
+      }
     },
     methods: {},
     computed: {
@@ -97,24 +96,6 @@
 
   }
 
-  .header-actions__profile {
-    height: 50px;
-    width: 200px;
-    background: #0055C7;
-    border-radius: 10px;
-    padding: 13px 30px;
-    align-items: center;
-
-  }
-
-  .header-actions__profile__text {
-    font-size: 16px;
-    line-height: 20px;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-  }
-
   .header-actions__login, .header-actions__registration {
     /*width: 80px;*/
     /*height: 40px;*/
@@ -150,27 +131,6 @@
 
   .header-profile__icon {
     cursor: pointer;
-  }
-
-  .profile-dropdown {
-    position: absolute;
-    top: 90px;
-    background: green;
-    width: 210px;
-    padding: 5px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  .profile-dropdown__item {
-    padding: 10px;
-    font-size: 16px;
-    line-height: 20px;
-    cursor: pointer;
-  }
-
-  .profile-dropdown__item:hover {
-    background: #F3F3F3;
   }
 
 
