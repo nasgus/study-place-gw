@@ -7,10 +7,15 @@
       div.header-actions__notifications
         div.header-actions__notifications__red-btn
         img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div
-        div.header-profile
-          div.header-profile__name Anton Mokhonko
-          img.header-profile__photo.level-right(:src="require('../assets/profile-photo.jpg')")
+      div.header-profile
+        div.header-profile__name Anton Mokhonko
+        img.header-profile__photo.level-right(:src="require('../assets/profile-photo.jpg')")
+        img.header-profile__icon(:src="require('../assets/icons/arrow_down.svg')")
+      ul.profile-dropdown
+        li.profile-dropdown__item Дневник
+        li.profile-dropdown__item Календарь
+        li.profile-dropdown__item Курсы
+        li.profile-dropdown__item Настройки
       div.spacer
     div.header-actions.level-right(v-else)
       button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
@@ -23,11 +28,10 @@
 
 <script>
   import LoginModal from "../components/header/LoginModal";
-  import RightSidebar from "../components/header/RightSidebar";
 
   export default {
     name: "Header",
-    components: {RightSidebar, LoginModal},
+    components: {LoginModal},
     data() {
       return {}
     },
@@ -141,15 +145,33 @@
   }
 
   .header-profile {
-    cursor: pointer;
     display: flex;
   }
 
-  .header-profile__dropdown {
-    position: absolute;
-    background: white;
-    width: inherit;
-
+  .header-profile__icon {
+    cursor: pointer;
   }
+
+  .profile-dropdown {
+    position: absolute;
+    top: 90px;
+    background: green;
+    width: 210px;
+    padding: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .profile-dropdown__item {
+    padding: 10px;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+  }
+
+  .profile-dropdown__item:hover {
+    background: #F3F3F3;
+  }
+
 
 </style>
