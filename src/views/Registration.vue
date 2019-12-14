@@ -1,8 +1,8 @@
 <template lang="pug">
-  div.registration.container
-    div.registration-content.columns
-      RegistrationForm.column.is-4
-      div.registration-illustration.column.is-8
+  v-container
+    v-flex.ma-auto.xl8.lg8.md8(row)
+      RegistrationForm.xl4.lg4.md4
+      v-flex.xl7.lg7.md7
         img.registration-illustration__img(:src="require('../assets/registration/illustration.svg')")
 </template>
 
@@ -14,15 +14,11 @@
     components: {
       RegistrationForm
     },
-    data () {
+    data() {
       return {}
     },
-    methods: {
-
-    },
-    computed: {
-
-    }
+    methods: {},
+    computed: {}
   }
 </script>
 
