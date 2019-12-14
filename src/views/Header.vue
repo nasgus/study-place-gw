@@ -1,23 +1,11 @@
 <template lang="pug">
-  header.header.level
-    router-link(:to="{name: 'main'}")
-      img.header-logo.level-left(:src="require('../assets/logo.svg')")
-    div.header-actions.level-right.columns(v-if="true")
-      a.header-actions__link Курсы
-      div.header-actions__notifications
-        div.header-actions__notifications__red-btn
-        img.header-actions__notifications__icon(:src="require('../assets/icons/notification.svg')")
-      div.header-profile
-        div.header-profile__name Anton Mokhonko
-        img.header-profile__photo.level-right(:src="require('../assets/profile-photo.jpg')")
-        img.header-profile__icon(:src="require('../assets/icons/arrow_down.svg')", @click="dropdownActive = !dropdownActive")
-      Dropdown(:isActive="dropdownActive")
-      div.spacer
-    div.header-actions.level-right(v-else)
-      button.header-actions__login(@click="$store.commit('MODAL_IS_OPEN', true)") Логин
-      router-link(:to="{name: 'registration'}")
-        button.header-actions__registration Зарегистрироваться
-    LoginModal(v-if="modalIsOpen")
+  div
+    v-toolbar()
+      v-img.mx-5(:src="require('../assets/logo.svg')", max-width="100", max-height="100")
+      v-spacer
+      div
+        v-btn.ma-2(outlined, color="#002D56" @click="setModal(true)") Логин
+        v-btn.ma-3(outlined, color="#002D56", :to="{name: 'registration'}") Регистрация
 
 
 </template>
@@ -34,7 +22,11 @@
         dropdownActive: false
       }
     },
-    methods: {},
+    methods: {
+      setModal(payload) {
+        this.$store.commit('MODAL_IS_OPEN', payload)
+      }
+    },
     computed: {
       modalIsOpen() {
         return this.$store.getters.modalIsOpen

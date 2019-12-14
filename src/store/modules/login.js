@@ -7,6 +7,7 @@ export default {
 
   mutations: {
     [MODAL_IS_OPEN](state, payload) {
+      console.log(payload);
       state.modalIsOpen = payload
     }
   },
