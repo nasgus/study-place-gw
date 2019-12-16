@@ -1,21 +1,21 @@
 <template lang="pug">
-  div
-    div.container.main
-      div.columns
-        div.column.is-6
+  v-container
+    div.main
+      v-layout
+        v-flex.xl6.lg6
           h1.main-text__title.has-text-weight-bol Study Space
           div.main-text__description Обучающая платформа, где можно научится всему
           button.main-text__btn
             div.main-text__btn-text Стать участником
-        div.column.is-6
+        v-flex.xl6.lg6
           img(:src="require('../assets/main/main.gif')")
-    div.main-footer
+    //div.main-footer
       div.container
         div.main-footer__title.has-text-centered Почему стоит присоединиться к нам?
-        div.main-footer__cards.has-text-centered.columns
-          div.main-footer__cards__card.column Хранение домашних заданий и уроков в облаке
-          div.main-footer__cards__card.column Видео или аудиосвязь с преподователем
-          div.main-footer__cards__card.column Обучайся в любое время и в любом месте !
+        v-flex.main-footer__cards.has-text-centered(row)
+          div.main-footer__cards__card Хранение домашних заданий и уроков в облаке
+          div.main-footer__cards__card Видео или аудиосвязь с преподователем
+          div.main-footer__cards__card Обучайся в любое время и в любом месте !
 
 </template>
 
