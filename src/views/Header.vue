@@ -8,7 +8,7 @@
         v-btn.ma-3(outlined, color="#002D56", :to="{name: 'registration'}") Регистрация
       v-layout(v-else)
         v-spacer
-        div.mx-5.vertical-align Курсы
+        v-btn.mx-5.vertical-align(:to="{name: 'lesson'}") Курсы
         div.vertical-align Anton Mokhonko
         v-img.mx-2.profile-photo(:src="require('../assets/profile-photo.jpg')", max-height="50", max-width="50")
         v-menu

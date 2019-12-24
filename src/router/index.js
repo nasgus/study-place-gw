@@ -21,6 +21,11 @@ export default new Router({
           path: 'registration',
           name: 'registration',
           component: () => import('../views/Registration')
+        },
+        {
+          path: 'lesson',
+          name: 'lesson',
+          component: () => import('../views/Lesson')
         }
       ]
     }
