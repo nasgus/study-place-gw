@@ -26,6 +26,11 @@ export default new Router({
           path: 'lesson',
           name: 'lesson',
           component: () => import('../views/Lesson')
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('../views/Profile')
         }
       ]
     }
