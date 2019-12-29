@@ -1,13 +1,24 @@
 <template lang="pug">
   div
     v-toolbar()
-      v-img.mx-5(:src="require('../assets/logo.svg')", max-width="100", max-height="100")
+      router-link(:to="{name: 'main'}")
+        v-img.mx-5(:src="require('../assets/logo.svg')", max-width="100", max-height="100")
       v-spacer
-      div
+      div(v-if="authorized")
         v-btn.ma-2(outlined, color="#002D56" @click="setModal(true)") Логин
         v-btn.ma-3(outlined, color="#002D56", :to="{name: 'registration'}") Регистрация
-
-
+      v-layout(v-else)
+        v-spacer
+        //v-btn.mx-5.vertical-align(:to="{name: 'lesson'}") Курсы
+        div.vertical-align Anton Mokhonko
+        v-img.mx-2.profile-photo(:src="require('../assets/profile-photo.jpg')", max-height="50", max-width="50")
+        v-menu
+          template(v-slot:activator="{on}")
+            v-btn(icon, v-on="on")
+              v-icon() mdi-dots-vertical
+          v-list
+            v-list-item(v-for="(item, index) in menu", @click="$router.push({name: item.to})", :key="index")
+              v-list-item-title {{ item.title }}
 </template>
 
 <script>
@@ -19,7 +30,9 @@
     components: {Dropdown, LoginModal},
     data() {
       return {
-        dropdownActive: false
+        dropdownActive: false,
+        authorized: false,
+        menu: [{title: 'Профиль', to: 'profile'}, {title: 'Дневник', to: 'diary'}, {title: 'Контакты', to: 'contacts'}]
       }
     },
     methods: {
@@ -36,94 +49,15 @@
 </script>
 
 <style scoped>
-  .header {
-    height: 90px;
-    width: 100%;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 10px 50px;
-  }
-
-  .header-logo {
-    cursor: pointer;
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-  }
-
-  .header-actions__notifications {
-    height: 35px;
-    width: 35px;
-    background: #0055C7;
-    margin: 0 10px;
-    border-radius: 10px;
-    position: relative;
-
-  }
-
-  .header-actions__link {
-    display: block;
-    height: 18px;
-    width: auto;
+  .vertical-align {
+    display: table-cell;
+    vertical-align: middle;
     text-align: center;
-    margin: 0 10px;
+    line-height: 3em;
   }
 
-  .header-actions__notifications__icon {
-    height: 100%;
-    width: 100%;
-    padding: 6px;
+  .profile-photo {
+    border-radius: 5px;
   }
-
-  .header-actions__notifications__red-btn {
-    height: 10px;
-    width: 10px;
-    position: absolute;
-    border-radius: 10px;
-    background: #EA435C;
-    right: -2px;
-    top: -2px;
-
-  }
-
-  .header-actions__login, .header-actions__registration {
-    /*width: 80px;*/
-    /*height: 40px;*/
-    border: 1px solid #002D56;
-    border-radius: 10px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    margin: 0 20px;
-    padding: 10px 20px;
-  }
-
-  .header-actions__login:hover, .header-actions__registration:hover {
-    background: #002D56;
-    color: #F3F3F3;
-    transition: all .2s;
-  }
-
-  .header-profile__photo {
-    height: 50px;
-    width: 50px;
-    border-radius: 10px;
-    margin: 5px;
-  }
-
-  .header-profile__name {
-    display: flex;
-    margin: auto 0;
-  }
-
-  .header-profile {
-    display: flex;
-  }
-
-  .header-profile__icon {
-    cursor: pointer;
-  }
-
 
 </style>

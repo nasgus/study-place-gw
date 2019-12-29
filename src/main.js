@@ -5,6 +5,7 @@ import store from './store'
 import axios from 'axios'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import 'vue-trix'
 
 let vuetify = new Vuetify();
 
