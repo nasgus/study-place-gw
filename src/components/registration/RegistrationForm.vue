@@ -1,56 +1,48 @@
 <template lang="pug">
-  div.registration-form
+  v-flex
     h3.registration-form__title РЕГИСТРАЦИЯ
     a.registration-form__to-login(@click="$store.commit('MODAL_IS_OPEN', true)") Уже есть аккаунт?
     form
-      input(placeholder="Логин").registration-form__input
-      input(placeholder="Пароль").registration-form__input
-      input(placeholder="Повторите пароль").registration-form__input
-      input(placeholder="Номер телефона").registration-form__input
-      input(placeholder="E-mail").registration-form__input
-      input(placeholder="Имя").registration-form__input
+      v-text-field(label="Email", v-model="form.email", single-line, outlined)
+      v-text-field(label="Пароль", v-model="form.password", single-line, outlined)
+      v-text-field(label="Повторите пароль", v-model="form.confirmationPassword", single-line, outlined)
+      v-text-field(label="Имя", v-model="form.firstName", single-line, outlined)
+      v-text-field(label="Фамилия", v-model="form.lastName", single-line, outlined)
+      v-text-field(label="Отчество", v-model="form.middleName", single-line, outlined)
       div.layout
-        input(placeholder="Фамилия").registration-form__input
-        input(placeholder="Отчество").registration-form__input
-      div.layout
-        button.registration-form__button Зарегистрироваться
-        div.spacer
-
+        v-btn(color="error", depressed, @click="sendUserData()") Зарегистрироваться
 </template>
 
 <script>
+  import api from '../../api'
 
   export default {
     name: "RegistrationForm",
-    components: {
-    },
+    components: {},
     data() {
       return {
-        form: {}
+        form: {
+          email: '',
+          password: '',
+          confirmationPassword: '',
+          firstName: '',
+          lastName: '',
+          middleName: ''
+        }
+      }
+    },
+    methods: {
+      sendUserData() {
+        api.post('/users/register', this.form)
+          .then(res => {
+            console.log(res)
+          })
       }
     }
   }
 </script>
 
 <style scoped>
-
-  .registration-form {
-    margin: auto;
-  }
-
-  .registration-form__input {
-    background: #F3F3F3;
-    width: 100%;
-    margin: 10px 5px;
-    height: 50px;
-    padding-left: 15px;
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 200;
-    font-size: 20px;
-    line-height: 23px;
-    border-radius: 10px;
-  }
 
   .registration-form__title {
     font-family: 'Roboto', sans-serif;
