@@ -5,20 +5,40 @@
         v-card-title Вход
         v-card-text
           v-container
-            v-text-field(label="Email" single-line outline)
-            v-text-field(label="Пароль" single-line outline)
+            v-text-field(label="Email", v-model="form.email" single-line outline)
+            v-text-field(label="Пароль", v-model="form.password" single-line outline)
         v-card-actions
           v-spacer
-          v-btn(color="#EA435C" text) Войти
+          v-btn(color="#EA435C", text, @click="login()") Войти
 </template>
 
 <script>
+  import api from '../../api'
+
   export default {
     name: "LoginModal",
     props: {
       isOpen: Function
     },
-    methods: {},
+    data() {
+      return {
+        form: {
+          email: '',
+          password: ''
+        }
+      }
+    },
+    methods: {
+      login() {
+        api.post('/users/login', this.form)
+          .then(res => {
+            this.$store.commit('MODAL_IS_OPEN', false)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    },
     computed: {
       modalIsOpen: {
         get: function () {

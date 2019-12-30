@@ -15,9 +15,15 @@
       RegistrationForm
     },
     data() {
-      return {}
+      return {
+        form: {
+
+        }
+      }
     },
-    methods: {},
+    methods: {
+
+    },
     computed: {}
   }
 </script>

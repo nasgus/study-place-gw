@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '../src/router'
 import store from './store'
-import axios from 'axios'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'vue-trix'
@@ -14,9 +13,6 @@ Vue.use(Vuetify, {
     iconfont: "md"
   }
 })
-
-
-axios.defaults.baseURL = 'http://localhost:3000';
 
 Vue.config.productionTip = false;
 
