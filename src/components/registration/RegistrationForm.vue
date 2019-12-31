@@ -3,6 +3,7 @@
     h3.registration-form__title РЕГИСТРАЦИЯ
     a.registration-form__to-login(@click="$store.commit('MODAL_IS_OPEN', true)") Уже есть аккаунт?
     form
+      v-text-field(label="Логин", v-model="form.login", single-line, outlined)
       v-text-field(label="Email", v-model="form.email", single-line, outlined)
       v-text-field(label="Пароль", v-model="form.password", single-line, outlined)
       v-text-field(label="Повторите пароль", v-model="form.confirmationPassword", single-line, outlined)
@@ -23,6 +24,7 @@
       return {
         form: {
           email: '',
+          login: '',
           password: '',
           confirmationPassword: '',
           firstName: '',
