@@ -7,34 +7,46 @@
         v-img.user-photo.mt-5(:src="require('../assets/profile-photo.jpg')")
       v-flex
         div.mb-5 Информация
-        v-input.information-input(v-for="(input, index) in list", :key="index", :messages="[input.subtitle]") {{input.title}}
+        v-input.information-input(v-for="(input, index) in list", :key="index", :messages="[input.subtitle]") {{profile[input.key]}}
 </template>
 
 <script>
+  import api from '../api'
+
   export default {
     name: "Profile",
-    data () {
+    data() {
       return {
         list: [
           {
-            title: 'Студент, Харьковский Национальный Университет Радиоелектроники',
+            key: 'education',
             subtitle: 'образование'
           },
           {
-            title: 'Украина, Харьков',
-            subtitle: 'страна, город'
-          },
-          {
-            title: 'mokhnatuy@gmail.com',
+            key: 'email',
             subtitle: 'email'
           },
           {
-            title: '+380954878862',
+            key: 'phone',
             subtitle: 'номер телефона'
           },
-
         ]
       }
+    },
+    methods: {},
+    computed: {
+      profile() {
+        return this.$store.getters.getProfile
+      }
+    },
+    created() {
+      api.get('/profile')
+        .then(res => {
+          this.$store.commit('SET_PROFILE', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 </script>

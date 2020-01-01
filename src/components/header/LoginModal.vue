@@ -5,7 +5,7 @@
         v-card-title Вход
         v-card-text
           v-container
-            v-text-field(label="Email", v-model="form.email" single-line outline)
+            v-text-field(label="Login", v-model="form.login" single-line outline)
             v-text-field(label="Пароль", v-model="form.password" single-line outline)
         v-card-actions
           v-spacer
@@ -23,7 +23,7 @@
     data() {
       return {
         form: {
-          email: '',
+          login: '',
           password: ''
         }
       }
@@ -32,6 +32,7 @@
       login() {
         api.post('/users/login', this.form)
           .then(res => {
+            this.$store.commit('SET_USER_ID', res.id);
             this.$store.commit('MODAL_IS_OPEN', false)
           })
           .catch(err => {

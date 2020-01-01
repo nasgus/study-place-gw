@@ -43,6 +43,9 @@
     computed: {
       modalIsOpen() {
         return this.$store.getters.modalIsOpen
+      },
+      isAuthorized() {
+        return this.$store.getters.user
       }
     }
   }
