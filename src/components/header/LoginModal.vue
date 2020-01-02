@@ -32,7 +32,6 @@
       login() {
         api.post('/users/login', this.form)
           .then(res => {
-            this.$store.commit('SET_USER_ID', res.id);
             this.$store.commit('MODAL_IS_OPEN', false)
           })
           .catch(err => {

@@ -4,7 +4,7 @@
       router-link(:to="{name: 'main'}")
         v-img.mx-5(:src="require('../assets/logo.svg')", max-width="100", max-height="100")
       v-spacer
-      div(v-if="authorized")
+      div(v-if="!isAuthorized")
         v-btn.ma-2(outlined, color="#002D56" @click="setModal(true)") Логин
         v-btn.ma-3(outlined, color="#002D56", :to="{name: 'registration'}") Регистрация
       v-layout(v-else)
@@ -31,7 +31,7 @@
     data() {
       return {
         dropdownActive: false,
-        authorized: false,
+        authorized: true,
         menu: [{title: 'Профиль', to: 'profile'}, {title: 'Дневник', to: 'diary'}, {title: 'Контакты', to: 'contacts'}]
       }
     },
@@ -45,7 +45,8 @@
         return this.$store.getters.modalIsOpen
       },
       isAuthorized() {
-        return this.$store.getters.user
+        console.log(this.$store.getters.isAuthorized)
+        return this.$store.getters.isAuthorized
       }
     }
   }

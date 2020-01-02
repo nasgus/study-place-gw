@@ -1,4 +1,4 @@
-import {SET_USER_ID} from '../mutation-types'
+import {SET_USER_ID, DELETE_USER_ID} from '../mutation-types'
 
 export default {
   state: {
@@ -8,6 +8,9 @@ export default {
   mutations: {
     [SET_USER_ID](state, userId) {
       state.userId = userId
+    },
+    [DELETE_USER_ID](state, payload) {
+      state.userId = payload
     }
   },
 
