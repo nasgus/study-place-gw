@@ -14,6 +14,7 @@
 
 <script>
   import api from '../../api'
+  import store from "../../store";
 
   export default {
     name: "LoginModal",
@@ -32,6 +33,8 @@
       login() {
         api.post('/users/login', this.form)
           .then(res => {
+            console.log(res)
+            this.$store.commit('SET_USER_ID', res.data.id)
             this.$store.commit('MODAL_IS_OPEN', false)
           })
           .catch(err => {

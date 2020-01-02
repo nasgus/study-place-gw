@@ -7,12 +7,13 @@
   import Header from "./views/Header";
   import axios from 'axios'
   import store from './store'
+  import router from './router'
 
   axios.interceptors.response.use(function (config) {
     if (config.headers.authorized) {
-      console.log(config.headers.authorized, 'kek');
       store.commit('SET_USER_ID', config.headers.authorized)
     } else {
+      this.$router.push({name: 'main'}, () => {});
       store.commit('DELETE_USER_ID', null)
     }
     return config;
@@ -24,6 +25,9 @@
   export default {
     components: {
       Header
+    },
+    created() {
+      axios.get('/auth')
     }
   }
 </script>

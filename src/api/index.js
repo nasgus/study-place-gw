@@ -9,7 +9,6 @@ export default {
       return await axios.get(endpoint)
     } catch (e) {
       console.log(endpoint);
-      console.log(e);
       return e
     }
   },
@@ -18,7 +17,6 @@ export default {
       return await axios.post(endpoint, data)
     } catch (e) {
       console.log(endpoint);
-      console.log(e);
       return e
     }
   }

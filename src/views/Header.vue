@@ -17,7 +17,7 @@
             v-btn(icon, v-on="on")
               v-icon() mdi-dots-vertical
           v-list
-            v-list-item(v-for="(item, index) in menu", @click="$router.push({name: item.to})", :key="index")
+            v-list-item(v-for="(item, index) in menu", @click="goTo(item.to)", :key="index")
               v-list-item-title {{ item.title }}
 </template>
 
@@ -38,6 +38,9 @@
     methods: {
       setModal(payload) {
         this.$store.commit('MODAL_IS_OPEN', payload)
+      },
+      goTo(to) {
+        this.$router.push({name: to}, () => {})
       }
     },
     computed: {
