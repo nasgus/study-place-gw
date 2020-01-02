@@ -13,7 +13,7 @@
     if (config.headers.authorized) {
       store.commit('SET_USER_ID', config.headers.authorized)
     } else {
-      this.$router.push({name: 'main'}, () => {});
+      router.push({name: 'main'}, () => {});
       store.commit('DELETE_USER_ID', null)
     }
     return config;
