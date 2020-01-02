@@ -5,12 +5,13 @@ import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'vue-trix'
+import '@mdi/font/css/materialdesignicons.css'
 
 let vuetify = new Vuetify();
 
 Vue.use(Vuetify, {
   icons: {
-    iconfont: "md"
+    iconfont: "mdi"
   }
 })
 

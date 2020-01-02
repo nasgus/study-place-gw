@@ -26,7 +26,11 @@ export default {
   },
 
   getters: {
-    getProfile: state => state
+    getProfile: state => state,
+    getFullName: state => {
+      return state.firstName + ' ' + state.lastName
+
+    }
   },
 
   actions: {}

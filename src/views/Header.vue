@@ -10,7 +10,7 @@
       v-layout(v-else)
         v-spacer
         //v-btn.mx-5.vertical-align(:to="{name: 'lesson'}") Курсы
-        div.vertical-align Anton Mokhonko
+        div.vertical-align {{fullName}}
         v-img.mx-2.profile-photo(:src="require('../assets/profile-photo.jpg')", max-height="50", max-width="50")
         v-menu
           template(v-slot:activator="{on}")
@@ -48,8 +48,10 @@
         return this.$store.getters.modalIsOpen
       },
       isAuthorized() {
-        console.log(this.$store.getters.isAuthorized)
         return this.$store.getters.isAuthorized
+      },
+      fullName() {
+        return this.$store.getters.getFullName
       }
     }
   }

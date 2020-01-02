@@ -1,9 +1,12 @@
 <template lang="pug">
   v-container
-    h2.mb-10 Мой профиль
+    div.mb-10
+      h2 Мой профиль
+        v-btn(icon)
+          v-icon mdi-account-edit
     v-layout()
       v-flex(lg3, xl3)
-        div.user-name Антон Мохонько Сергеевич
+        div.user-name {{fullName}}
         v-img.user-photo.mt-5(:src="require('../assets/profile-photo.jpg')")
       v-flex
         div.mb-5 Информация
@@ -29,7 +32,7 @@
           {
             key: 'phone',
             subtitle: 'номер телефона'
-          },
+          }
         ]
       }
     },
@@ -37,6 +40,9 @@
     computed: {
       profile() {
         return this.$store.getters.getProfile
+      },
+      fullName() {
+        return this.$store.getters.getFullName
       }
     },
     created() {

@@ -28,6 +28,9 @@
     },
     created() {
       axios.get('/auth')
+      .then((res) => {
+        this.$store.commit('SET_PROFILE', res.data)
+      })
     }
   }
 </script>
