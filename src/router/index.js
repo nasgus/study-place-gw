@@ -30,7 +30,12 @@ export default new Router({
         {
           path: 'profile',
           name: 'profile',
-          component: () => import('../views/Profile')
+          component: () => import('../views/profile/Profile')
+        },
+        {
+          path: 'profile/edit',
+          name: 'editProfile',
+          component: () => import('../views/profile/EditProfile')
         }
       ]
     }

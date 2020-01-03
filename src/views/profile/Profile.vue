@@ -2,12 +2,12 @@
   v-container
     div.mb-10
       h2 Мой профиль
-        v-btn(icon)
+        v-btn(icon, :to="{name: 'editProfile'}")
           v-icon mdi-account-edit
     v-layout()
       v-flex(lg4, xl4)
         h4.user-name {{fullName}}
-        v-img.user-photo.mt-5(:src="require('../assets/profile-photo.jpg')")
+        v-img.user-photo.mt-5(:src="require('../../assets/profile-photo.jpg')")
       v-flex(lg4, xl4)
         h4.mb-5 Информация
         v-input.information-input(v-for="(input, index) in list", :key="index", :messages="[input.subtitle]") {{profile[input.key]}}
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-  import api from '../api'
-  import Contact from "../components/profile/Contact";
+  import api from '../../api'
+  import Contact from "../../components/profile/Contact";
 
   export default {
     name: "Profile",
