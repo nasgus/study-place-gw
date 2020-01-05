@@ -56,7 +56,7 @@
       updateProfile() {
         api.post('/profile/edit', this.profileFields)
           .then(res => {
-            console.log(res)
+            this.$store.commit('SET_PROFILE', res.data)
           })
       },
       maxPhotoSize(value) {

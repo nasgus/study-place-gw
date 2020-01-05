@@ -9,17 +9,18 @@ export default {
     email: '',
     phone: '',
     dateOfBirthday: '',
-    description: ''
+    description: '',
+    photo: ''
   },
 
   mutations: {
     [SET_PROFILE](state, profile) {
       state.firstName = profile.firstName
       state.lastName = profile.lastName
-      state.middleName = profile.middleName
+      state.education = profile.education
       state.email = profile.email
       state.phone = profile.phone
-      state.dateOfBirthday = profile.dateOfBirthday
+      state.photo = profile.photo
       state.description = profile.description
       state.firstName = profile.firstName
     }
