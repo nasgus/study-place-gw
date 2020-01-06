@@ -76,7 +76,7 @@
       }
     },
     methods: {
-      openModal () {
+      openModal() {
         this.$store.commit('OPEN_ADD_CONTACT_MODAL', true)
       }
     },
@@ -89,12 +89,16 @@
       }
     },
     created() {
-      api.get('/profile')
+      api.get('/profiles/me')
         .then(res => {
           this.$store.commit('SET_PROFILE', res.data)
         })
         .catch(err => {
           console.log(err)
+        })
+      api.get('/friends')
+        .then(res => {
+          console.log(res)
         })
     }
   }

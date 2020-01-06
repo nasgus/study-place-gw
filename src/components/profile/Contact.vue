@@ -1,16 +1,29 @@
 <template lang="pug">
-  v-card.my-2(max-width="400px")
-    v-list-item
-      v-list-item-avatar(color="grey")
-      v-list-item-content
-        v-list-item-title.headline {{fullName}}
-        v-list-item-subtitle {{education}}
-      v-list-item-action
-        v-layout
-          v-btn(icon)
-            v-icon mdi-phone-in-talk
-          v-btn(icon)
-            v-icon mdi-account
+  div
+    v-card.my-2(v-if="isFriend", max-width="400px")
+      v-list-item
+        v-list-item-avatar(color="grey")
+        v-list-item-content
+          v-list-item-title.headline {{fullName}}
+          v-list-item-subtitle {{education}}
+        v-list-item-action
+          v-layout
+            v-btn(icon)
+              v-icon mdi-phone-in-talk
+            v-btn(icon)
+              v-icon mdi-account
+    v-card(v-else, max-width="400px")
+      v-list-item
+        v-list-item-avatar(color="grey")
+        v-list-item-content
+          v-list-item-title.headline {{fullName}}
+          v-list-item-subtitle {{education}}
+        v-list-item-action
+          v-layout
+            v-btn(icon)
+              v-icon mdi-check
+            v-btn(icon)
+              v-icon mdi-close
 </template>
 
 <script>
@@ -31,6 +44,10 @@
       },
       photo: {
         type: String
+      },
+      isFriend: {
+        type: Boolean,
+        default: true
       }
     }
   }

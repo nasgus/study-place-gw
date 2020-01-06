@@ -25,7 +25,7 @@
     methods: {
       addContact() {
         if (this.userIdentity) {
-          api.post('/friend/create', {userIdentity: this.userIdentity})
+          api.post('/friends/create', {userIdentity: this.userIdentity})
             .then(res => {
               if (res.data) {
                 this.closeModal()
