@@ -12,7 +12,11 @@
         h4.mb-5 Информация
         v-input.information-input(v-for="(input, index) in list", :key="index", :messages="[input.subtitle]") {{profile[input.key]}}
       v-flex(xl4, lg4)
+        AddContact
         h4 Список контактов
+          v-btn.ml-2(icon, @click="openModal()")
+            v-icon mdi-account-plus
+        div Ваш идентификатор: {{profile.identity}}
         div.contacts
           Contact(v-for="(user, index) in users", :fullName="user.fullName", :education="user.education", :userId="user.userId", :key="index")
 
@@ -21,10 +25,11 @@
 <script>
   import api from '../../api'
   import Contact from "../../components/profile/Contact";
+  import AddContact from "../../components/profile/AddContact";
 
   export default {
     name: "Profile",
-    components: {Contact},
+    components: {AddContact, Contact},
     data() {
       return {
         list: [
@@ -70,7 +75,11 @@
         ]
       }
     },
-    methods: {},
+    methods: {
+      openModal () {
+        this.$store.commit('OPEN_ADD_CONTACT_MODAL', true)
+      }
+    },
     computed: {
       profile() {
         return this.$store.getters.getProfile

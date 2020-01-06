@@ -36,7 +36,7 @@
             console.log(res)
             this.$store.commit('SET_USER_ID', res.data.userId);
             this.$store.commit('SET_PROFILE', res.data);
-            this.$store.commit('MODAL_IS_OPEN', false)
+            this.$store.commit('OPEN_LOGIN_MODAL', false)
           })
           .catch(err => {
             console.log(err)
@@ -46,10 +46,10 @@
     computed: {
       modalIsOpen: {
         get: function () {
-          return this.$store.getters.modalIsOpen
+          return this.$store.getters.loginModalIsOpen
         },
         set: function (payload) {
-          this.$store.commit('MODAL_IS_OPEN', payload)
+          this.$store.commit('OPEN_LOGIN_MODAL', payload)
         }
       }
     }

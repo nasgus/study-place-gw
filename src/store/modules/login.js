@@ -1,17 +1,17 @@
-import {MODAL_IS_OPEN} from '../mutation-types'
+import {OPEN_LOGIN_MODAL} from '../mutation-types'
 
 export default {
   state: {
-    modalIsOpen: false
+    loginModalIsOpen: false
   },
 
   mutations: {
-    [MODAL_IS_OPEN](state, payload) {
-      state.modalIsOpen = payload
+    [OPEN_LOGIN_MODAL](state, payload) {
+      state.loginModalIsOpen = payload
     }
   },
 
   getters: {
-    modalIsOpen: state => state.modalIsOpen
+    loginModalIsOpen: state => state.loginModalIsOpen
   }
 }

@@ -1,16 +1,18 @@
-import {SET_USER_ID, DELETE_USER_ID} from '../mutation-types'
+import {SET_USER_ID, DELETE_USER} from '../mutation-types'
 
 export default {
   state: {
-    userId: null
+    userId: null,
+    userIdentity: null
   },
 
   mutations: {
     [SET_USER_ID](state, userId) {
       state.userId = userId
     },
-    [DELETE_USER_ID](state, payload) {
-      state.userId = payload
+    [DELETE_USER](state, payload) {
+      state.userId = payload;
+      state.userIdentity = payload
     }
   },
 
@@ -21,6 +23,9 @@ export default {
   },
 
   actions: {
+    deleteUser({commit}) {
+      commit('DELETE_USER', null)
+    }
 
   }
 }
