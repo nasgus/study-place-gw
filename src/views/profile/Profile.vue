@@ -18,7 +18,8 @@
             v-icon mdi-account-plus
         div Ваш идентификатор: {{profile.identity}}
         div.contacts
-          Contact(v-for="(user, index) in users", :fullName="user.fullName", :education="user.education", :userId="user.userId", :key="index")
+          Contact(v-for="(user, index) in contacts.subscribers", :fullName="user.firstName +' ' + user.lastName", :education="user.education", :userId="user.userId", :key="index", :is-friend="false", :friendId="userId")
+          Contact(v-for="(user, index) in contacts.friends", :fullName="user.firstName +' ' + user.lastName", :education="user.education", :userId="user.userId", :key="index", :is-friend="true", :friendId="user.userId")
 
 </template>
 
@@ -45,39 +46,15 @@
             key: 'phone',
             subtitle: 'номер телефона'
           }
-        ],
-        users: [
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-          {
-            fullName: 'Anton Mokhonko', education: 'NTU KHPI', userId: '2', photo: ''
-          },
-
         ]
       }
     },
     methods: {
       openModal() {
         this.$store.commit('OPEN_ADD_CONTACT_MODAL', true)
+      },
+      getFriends() {
+        this.$store.dispatch('getFriends')
       }
     },
     computed: {
@@ -86,6 +63,9 @@
       },
       fullName() {
         return this.$store.getters.getFullName
+      },
+      contacts() {
+        return this.$store.getters.contacts
       }
     },
     created() {
@@ -95,11 +75,8 @@
         })
         .catch(err => {
           console.log(err)
-        })
-      api.get('/friends')
-        .then(res => {
-          console.log(res)
-        })
+        });
+      this.getFriends()
     }
   }
 </script>
@@ -121,5 +98,9 @@
   .v-input__slot {
     margin-bottom: 0;
     margin-top: 10px;
+  }
+
+  hr {
+    max-width: 400px;
   }
 </style>

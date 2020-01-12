@@ -9,3 +9,6 @@ export const DELETE_USER = 'DELETE_USER';
 //profile
 export const SET_PROFILE = 'SET_PROFILE';
 export const OPEN_ADD_CONTACT_MODAL = 'OPEN_ADD_CONTACT_MODAL';
+
+//friends
+export const SET_FRIENDS = 'SET_FRIENDS';

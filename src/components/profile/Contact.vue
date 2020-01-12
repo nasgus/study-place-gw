@@ -20,13 +20,15 @@
           v-list-item-subtitle {{education}}
         v-list-item-action
           v-layout
-            v-btn(icon)
+            v-btn(icon, @click="acceptFriend()")
               v-icon mdi-check
-            v-btn(icon)
+            v-btn(icon, @click="declineFriend()")
               v-icon mdi-close
 </template>
 
 <script>
+  import api from '../../api'
+
   export default {
     name: "Contact",
     props: {
@@ -48,6 +50,17 @@
       isFriend: {
         type: Boolean,
         default: true
+      }
+    },
+    methods: {
+      acceptFriend () {
+        api.post('/friends/accept', {friendId: this.userId})
+          .then(res => {
+            this.$store.dispatch('getFriends')
+          })
+      },
+      declineFriend() {
+
       }
     }
   }
