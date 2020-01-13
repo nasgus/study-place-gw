@@ -36,8 +36,8 @@ export default {
     getProfile: state => state,
     getFullName: state => {
       return state.firstName + ' ' + state.lastName
-
     },
+    getProfilePhoto: state => state.photo,
     addContactModalIsOpen: state => state.addContactModalIsOpen
   },
 

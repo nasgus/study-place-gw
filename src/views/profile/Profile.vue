@@ -7,7 +7,7 @@
     v-layout()
       v-flex(lg4, xl4)
         h4.user-name {{fullName}}
-        v-img.user-photo.mt-5(:src="profile.photo ? profile.photo : ''")
+        v-img.user-photo.mt-5(:src="profile.photo ? profile.photo : require('../../assets/profile-photo.png')")
       v-flex(lg4, xl4)
         h4.mb-5 Информация
         v-input.information-input(v-for="(input, index) in list", :key="index", :messages="[input.subtitle]") {{profile[input.key]}}
