@@ -54,7 +54,7 @@
     },
     methods: {
       updateProfile() {
-        api.post('/profile/edit', this.profileFields)
+        api.post('/profiles/edit', this.profileFields)
           .then(res => {
             this.$store.commit('SET_PROFILE', res.data)
           })
@@ -88,7 +88,7 @@
       }
     },
     created() {
-      api.get('/profile')
+      api.get('/profiles/me')
         .then(res => {
           let profile = res.data;
 

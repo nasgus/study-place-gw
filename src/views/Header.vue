@@ -5,13 +5,13 @@
         v-img.mx-5(:src="require('../assets/logo.svg')", max-width="100", max-height="100")
       v-spacer
       div(v-if="!isAuthorized")
-        v-btn.ma-2(outlined, color="#002D56" @click="setModal(true)") Логин
+        v-btn.ma-2(outlined, color="#002D56" @click="openModal()") Логин
         v-btn.ma-3(outlined, color="#002D56", :to="{name: 'registration'}") Регистрация
       v-layout(v-else)
         v-spacer
         //v-btn.mx-5.vertical-align(:to="{name: 'lesson'}") Курсы
         div.vertical-align {{fullName}}
-        v-img.mx-2.profile-photo(:src="require('../assets/profile-photo.jpg')", max-height="50", max-width="50")
+        v-img.mx-2.profile-photo(:src="profilePhoto ? profilePhoto : require('../assets/profile-photo.png')", max-height="50", max-width="50")
         v-menu
           template(v-slot:activator="{on}")
             v-btn(icon, v-on="on")
@@ -36,22 +36,25 @@
       }
     },
     methods: {
-      setModal(payload) {
-        this.$store.commit('MODAL_IS_OPEN', payload)
+      openModal() {
+        this.$store.commit('OPEN_LOGIN_MODAL', true)
       },
       goTo(to) {
         this.$router.push({name: to}, () => {})
       }
     },
     computed: {
-      modalIsOpen() {
-        return this.$store.getters.modalIsOpen
+      loginModalIsOpen() {
+        return this.$store.getters.loginModalIsOpen
       },
       isAuthorized() {
         return this.$store.getters.isAuthorized
       },
       fullName() {
         return this.$store.getters.getFullName
+      },
+      profilePhoto() {
+        return this.$store.getters.getProfilePhoto
       }
     }
   }

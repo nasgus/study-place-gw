@@ -4,6 +4,7 @@ import registration from "./modules/registration";
 import login from "./modules/login";
 import profile from "./modules/profile";
 import user from "./modules/user";
+import friends from "./modules/friends";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     registration,
     login,
     profile,
-    user
+    user,
+    friends
   }
 })

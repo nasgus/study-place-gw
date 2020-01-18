@@ -14,7 +14,7 @@
       store.commit('SET_USER_ID', config.headers.authorized)
     } else {
       router.push({name: 'main'}, () => {});
-      store.commit('DELETE_USER_ID', null)
+      store.commit('SET_USER_ID', null)
     }
     return config;
   }, function (error) {

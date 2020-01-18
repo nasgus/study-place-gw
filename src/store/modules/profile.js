@@ -1,4 +1,4 @@
-import {SET_PROFILE} from '../mutation-types'
+import {SET_PROFILE, OPEN_ADD_CONTACT_MODAL} from '../mutation-types'
 
 export default {
   state: {
@@ -10,7 +10,9 @@ export default {
     phone: '',
     dateOfBirthday: '',
     description: '',
-    photo: ''
+    photo: '',
+    identity: '',
+    addContactModalIsOpen: false
   },
 
   mutations: {
@@ -23,6 +25,10 @@ export default {
       state.photo = profile.photo
       state.description = profile.description
       state.firstName = profile.firstName
+      state.identity = profile.user.identity
+    },
+    [OPEN_ADD_CONTACT_MODAL](state, payload) {
+      state.addContactModalIsOpen = payload
     }
   },
 
@@ -30,8 +36,9 @@ export default {
     getProfile: state => state,
     getFullName: state => {
       return state.firstName + ' ' + state.lastName
-
-    }
+    },
+    getProfilePhoto: state => state.photo,
+    addContactModalIsOpen: state => state.addContactModalIsOpen
   },
 
   actions: {}

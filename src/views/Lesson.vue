@@ -5,7 +5,7 @@
         v-flex(xl10, lg10)
           div lkel
         v-flex(xl2, lg2)
-          v-img.border-img.mx-auto(:src="require('../assets/profile-photo.jpg')", max-width="150", max-height="150")
+          v-img.border-img.mx-auto(:src="require('../assets/profile-photo.png')", max-width="150", max-height="150")
           div.text-center Антон Мохонько
 
       v-flex(xl12, lg12)
