@@ -8,7 +8,7 @@
           v-list-item-subtitle {{education}}
         v-list-item-action
           v-layout
-            v-btn(icon)
+            v-btn(icon, :to="{name: 'lesson'}")
               v-icon mdi-phone-in-talk
             v-btn(icon)
               v-icon mdi-account
@@ -37,8 +37,7 @@
         required: true
       },
       education: {
-        type: String,
-        required: true
+        type: String
       },
       userId: {
         type: String,

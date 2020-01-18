@@ -6,8 +6,14 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'vue-trix'
 import '@mdi/font/css/materialdesignicons.css'
+import VueSocketIO from 'vue-socket.io'
 
 let vuetify = new Vuetify();
+
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: 'http://localhost:3000',
+}));
 
 Vue.use(Vuetify, {
   icons: {

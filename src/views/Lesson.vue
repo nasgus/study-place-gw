@@ -26,6 +26,15 @@
       return {
         text: ''
       }
+    },
+    methods: {},
+    created() {
+
+    },
+    watch: {
+      text (txt) {
+        this.$socket.emit('text', txt)
+      }
     }
   }
 </script>
