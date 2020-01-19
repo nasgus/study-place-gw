@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import api from '../api'
 
 Vue.use(Router);
 
@@ -25,6 +26,15 @@ export default new Router({
         {
           path: 'lesson',
           name: 'lesson',
+          props: true,
+          async beforeEnter (to, from, next) {
+            let incomingUser = to.query.contactId;
+            delete to.query.contacId;
+            let lesson = (await api.post('/lessons/create', {incomingUser})).data;
+
+            console.log(lesson)
+
+          },
           component: () => import('../views/Lesson')
         },
         {

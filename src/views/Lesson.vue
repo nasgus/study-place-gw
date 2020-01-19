@@ -15,6 +15,7 @@
 
 <script>
   import VueTrix from 'vue-trix'
+  import api from '../api'
 
 
   export default {
@@ -22,18 +23,26 @@
     components: {
       VueTrix
     },
-    data () {
+    props: {
+      contactId: [Number, String]
+    },
+    data() {
       return {
         text: ''
       }
     },
     methods: {},
+    computed: {
+      userId() {
+        return this.$store.getters.userId
+      }
+    },
     created() {
-
+      console.log(this.contactId)
     },
     watch: {
-      text (txt) {
-        this.$socket.emit('text', txt)
+      text(txt) {
+        this.$socket.emit('notebook', txt, this.userId, this.$route.query.contactId)
       }
     }
   }
@@ -43,9 +52,11 @@
   .border-img {
     border-radius: 30px;
   }
+
   .text-editor {
     height: 500px;
   }
+
   .trix-content {
     height: 500px;
   }

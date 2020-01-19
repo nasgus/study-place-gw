@@ -8,7 +8,7 @@
           v-list-item-subtitle {{education}}
         v-list-item-action
           v-layout
-            v-btn(icon, :to="{name: 'lesson'}")
+            v-btn(icon, :to="{name: 'lesson', query: {contactId: userId}}")
               v-icon mdi-phone-in-talk
             v-btn(icon)
               v-icon mdi-account

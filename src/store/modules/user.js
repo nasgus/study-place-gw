@@ -19,6 +19,9 @@ export default {
   getters: {
     isAuthorized(state) {
       return !!state.userId;
+    },
+    userId (state) {
+      return state.userId
     }
   },
 
