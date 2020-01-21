@@ -10,7 +10,7 @@
 
       v-flex(xl12, lg12)
         v-flex(xl10, lg10)
-          VueTrix.text-editor(v-model="text", height="500px")
+          VueTrix.text-editor(v-model="text", height="500px", @change="sendNotebook")
 </template>
 
 <script>
@@ -31,18 +31,33 @@
         text: ''
       }
     },
-    methods: {},
+    methods: {
+      sendNotebook(e) {
+        console.log(e)
+        // this.$socket.emit('notebook', txt, this.userId, this.$route.query.contactId)
+
+      },
+      onEditNotebook(txt) {
+        this.$socket.emit('notebook', txt, this.$route.params.lessonId);
+        console.log(txt)
+      }
+    },
     computed: {
       userId() {
         return this.$store.getters.userId
       }
     },
     created() {
-      console.log(this.contactId)
+      // this.$socket.emit('join', this.$route.params.lessonId);
+      api.post('/lessons/connect', {uniqueLessonId: this.$route.params.lessonId});
+      this.$socket.on('notebook', txt => {
+        console.log(txt)
+        this.text = txt
+      })
     },
     watch: {
-      text(txt) {
-        this.$socket.emit('notebook', txt, this.userId, this.$route.query.contactId)
+      text: {
+        handler: 'onEditNotebook'
       }
     }
   }

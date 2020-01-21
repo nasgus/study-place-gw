@@ -24,17 +24,8 @@ export default new Router({
           component: () => import('../views/Registration')
         },
         {
-          path: 'lesson',
+          path: 'lesson/:lessonId',
           name: 'lesson',
-          props: true,
-          async beforeEnter (to, from, next) {
-            let incomingUser = to.query.contactId;
-            delete to.query.contacId;
-            let lesson = (await api.post('/lessons/create', {incomingUser})).data;
-
-            console.log(lesson)
-
-          },
           component: () => import('../views/Lesson')
         },
         {

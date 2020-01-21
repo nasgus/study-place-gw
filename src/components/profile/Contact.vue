@@ -8,7 +8,7 @@
           v-list-item-subtitle {{education}}
         v-list-item-action
           v-layout
-            v-btn(icon, :to="{name: 'lesson', query: {contactId: userId}}")
+            v-btn(icon, @click="goToLesson()")
               v-icon mdi-phone-in-talk
             v-btn(icon)
               v-icon mdi-account
@@ -60,6 +60,10 @@
       },
       declineFriend() {
 
+      },
+      async goToLesson () {
+        let lesson = (await api.post('/lessons/create', {incomingUser: this.userId})).data;
+        this.$router.push({name: 'lesson', params: {lessonId: lesson.uniqueLessonId}}, () => {})
       }
     }
   }
