@@ -37,9 +37,9 @@
         // this.$socket.emit('notebook', txt, this.userId, this.$route.query.contactId)
 
       },
-      onEditNotebook(txt) {
-        this.$socket.emit('notebook', txt, this.$route.params.lessonId);
-        console.log(txt)
+      onEditNotebook() {
+        this.$socket.emit('send-notebook-text', this.text);
+        // console.log(txt)
       }
     },
     computed: {
@@ -47,18 +47,19 @@
         return this.$store.getters.userId
       }
     },
-    created() {
-      // this.$socket.emit('join', this.$route.params.lessonId);
-      api.post('/lessons/connect', {uniqueLessonId: this.$route.params.lessonId});
-      this.$socket.on('notebook', txt => {
-        console.log(txt)
+    sockets: {
+      'notebook-text'(txt) {
         this.text = txt
-      })
-    },
-    watch: {
-      text: {
-        handler: 'onEditNotebook'
       }
+    },
+    mounted() {
+      this.$socket.emit('join', this.$route.params.lessonId, this.userId);
+      // api.post('/lessons/connect', {uniqueLessonId: this.$route.params.lessonId})
+      //   .then(res => {
+      //   });
+    },
+    mounted() {
+      setInterval(this.onEditNotebook, 500)
     }
   }
 </script>
