@@ -10,7 +10,7 @@
 
       v-flex(xl12, lg12)
         v-flex(xl10, lg10)
-          quill-editor(v-model="text", @change="onEditNotebook")
+          quill-editor(v-model="text", @keydown.native="onEditNotebook")
 </template>
 
 <script>
@@ -30,34 +30,26 @@
       }
     },
     methods: {
-      sendNotebook(e) {
-        console.log(e)
-
-      },
-      // onEditNotebook(ev) {
-      //   return this._.debounce(() => {
-      //     this.$socket.emit('send-notebook-text', ev.html, this.$route.params.lessonId);
-      //   }, 500)
-      // }
     },
     computed: {
       userId() {
         return this.$store.getters.userId
       },
-      onEditNotebook () {
-        return this._.debounce((ev) => {
-          this.$socket.emit('send-notebook-text', ev.html, this.$route.params.lessonId);
+      onEditNotebook() {
+        return this._.debounce(() => {
+          this.$socket.emit('send-notebook-text', this.text, this.$route.params.lessonId);
         }, 500)
       }
     },
     sockets: {
-      'notebook-text'(txt) {
-        this.text = txt
+      'notebook-text'(msg) {
+        if (msg.txt !== this.text) {
+          this.text = msg.txt
+        }
       }
     },
     mounted() {
       this.$socket.emit('join', this.$route.params.lessonId, this.userId);
-      // setInterval(this.onEditNotebook, 750)
     }
   }
 </script>
