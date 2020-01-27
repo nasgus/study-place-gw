@@ -5,6 +5,7 @@ import login from "./modules/login";
 import profile from "./modules/profile";
 import user from "./modules/user";
 import friends from "./modules/friends";
+import lesson from "./modules/lesson";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     login,
     profile,
     user,
-    friends
+    friends,
+    lesson
   }
 })

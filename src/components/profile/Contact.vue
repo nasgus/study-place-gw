@@ -52,7 +52,7 @@
       }
     },
     methods: {
-      acceptFriend () {
+      acceptFriend() {
         api.post('/friends/accept', {friendId: this.userId})
           .then(res => {
             this.$store.dispatch('getFriends')
@@ -61,9 +61,30 @@
       declineFriend() {
 
       },
-      async goToLesson () {
+      async goToLesson() {
         let lesson = (await api.post('/lessons/create', {incomingUser: this.userId})).data;
-        this.$router.push({name: 'lesson', params: {lessonId: lesson.uniqueLessonId}}, () => {})
+
+        this.$store.commit('SET_LESSON_ID', lesson.uniqueLessonId);
+        this.$store.commit('SET_OUTGOING_USER', this.fullName);
+
+        this.$socket.emit('invite-to-lesson', {
+          lessonId: lesson.uniqueLessonId,
+          fromFullName: this.myFullName,
+          fromUserId: this.myUserId,
+          to: this.userId
+        });
+
+        this.$store.commit('SET_OUTGOING_LESSON_POPUP', true)
+
+        // this.$router.push({name: 'lesson', params: {lessonId: lesson.uniqueLessonId}}, () => {})
+      }
+    },
+    computed: {
+      myFullName() {
+        return this.$store.getters.getFullName
+      },
+      myUserId() {
+        return this.$store.getters.userId
       }
     }
   }
