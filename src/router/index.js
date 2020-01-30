@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import api from '../api'
 
 Vue.use(Router);
 
@@ -23,7 +24,7 @@ export default new Router({
           component: () => import('../views/Registration')
         },
         {
-          path: 'lesson',
+          path: 'lesson/:lessonId',
           name: 'lesson',
           component: () => import('../views/Lesson')
         },

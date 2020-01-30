@@ -10,22 +10,46 @@
 
       v-flex(xl12, lg12)
         v-flex(xl10, lg10)
-          VueTrix.text-editor(v-model="text", height="500px")
+          quill-editor(v-model="text", @keydown.native="onEditNotebook")
 </template>
 
 <script>
-  import VueTrix from 'vue-trix'
+  import api from '../api'
 
 
   export default {
     name: "Lesson",
-    components: {
-      VueTrix
+    components: {},
+    props: {
+      contactId: [Number, String]
     },
-    data () {
+    data() {
       return {
-        text: ''
+        text: '',
+        oldText: ''
       }
+    },
+    methods: {
+    },
+    computed: {
+      userId() {
+        return this.$store.getters.userId
+      },
+      onEditNotebook() {
+        return this._.debounce(() => {
+          this.$socket.emit('send-notebook-text', this.text, this.$route.params.lessonId);
+        }, 500)
+      }
+    },
+    sockets: {
+      'notebook-text'(msg) {
+        if (msg.txt !== this.text) {
+          this.text = msg.txt
+        }
+      }
+    },
+    mounted() {
+      this.$socket.emit('join', this.$route.params.lessonId, this.userId);
     }
   }
 </script>
@@ -34,9 +58,11 @@
   .border-img {
     border-radius: 30px;
   }
+
   .text-editor {
     height: 500px;
   }
+
   .trix-content {
     height: 500px;
   }
