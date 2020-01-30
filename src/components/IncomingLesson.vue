@@ -25,12 +25,16 @@
       },
       lessonId() {
         return this.$store.getters.lessonId
+      },
+      fromUserId() {
+        return this.$store.getters.fromUserId
       }
     },
     methods: {
       acceptInvite() {
         this.$store.commit('SET_INCOMING_LESSON_POPUP', false);
-        this.$router.push({name: 'lesson', params: {lessonId: this.lessonId.toString()}}, () => {})
+        this.$router.push({name: 'lesson', params: {lessonId: this.lessonId.toString()}}, () => {});
+        this.$socket.emit('accept-incoming-call', {accepted: true, fromUserId: this.fromUserId})
       }
     }
   }

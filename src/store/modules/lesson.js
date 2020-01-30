@@ -1,4 +1,12 @@
-import {SET_INCOMING_LESSON_POPUP, SET_INCOMING_USER, SET_OUTGOING_USER, SET_LESSON_ID, SET_OUTGOING_LESSON_POPUP} from '../mutation-types'
+import {
+  SET_INCOMING_LESSON_POPUP,
+  SET_INCOMING_USER,
+  SET_OUTGOING_USER,
+  SET_LESSON_ID,
+  SET_OUTGOING_LESSON_POPUP,
+  SET_FROM_USER_ID,
+  SET_TO_USER_ID
+} from '../mutation-types'
 
 export default {
   state: {
@@ -6,7 +14,9 @@ export default {
     outgoingLesson: false,
     lessonId: '',
     fromFullName: '',
-    toFullName: ''
+    toFullName: '',
+    fromUserId: '',
+    toUserId: ''
   },
 
   mutations: {
@@ -25,6 +35,12 @@ export default {
     },
     [SET_LESSON_ID](state, payload) {
       state.lessonId = payload
+    },
+    [SET_FROM_USER_ID](state, payload) {
+      state.fromUserId = payload
+    },
+    [SET_TO_USER_ID](state, payload) {
+      state.toUserId = payload
     }
   },
 
@@ -33,6 +49,8 @@ export default {
     outgoingLessonPopup: state => state.outgoingLesson,
     lessonId: state => state.lessonId,
     fromFullName: state => state.fromFullName,
-    toFullName: state => state.toFullName
+    toFullName: state => state.toFullName,
+    toUserId: state => state.toUserId,
+    fromUserId: state => state.fromUserId
   }
 }

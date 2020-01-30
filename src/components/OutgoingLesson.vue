@@ -23,6 +23,9 @@
       lessonId () {
         return this.$store.getters.lessonId
       }
+    },
+    sockets: {
+
     }
   }
 </script>
