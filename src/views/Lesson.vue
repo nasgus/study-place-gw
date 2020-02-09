@@ -16,9 +16,7 @@
 
 <script>
   import api from '../api'
-
-  let peerConnection = new RTCPeerConnection
-
+  import config from '../../rtcConfig'
 
   export default {
     name: "Lesson",
@@ -30,96 +28,54 @@
       return {
         text: '',
         oldText: '',
-        pc: new RTCPeerConnection(),
+        pc: new RTCPeerConnection({iceServers: config}),
         constraints: {audio: true, video: true},
-        videoCall: false
+        videoCall: false,
       }
     },
     methods: {
-      openChat(description, from) {
-        this.videoAnswer = {
-          ...this.videoAnser,
-          video: true,
-          remoteDesc: description,
-          from
-        };
-        this.videoCall = true;
-      },
       async setUsers() {
         let res = await api.get(`/lessons/connect/${this.$route.params.lessonId}`)
         this.$store.commit('SET_TO_USER_ID', res.data.you);
         this.$store.commit('SET_FROM_USER_ID', res.data.me)
       },
-
-      callFriend() {
-        this.createOffer(); // Create offer
-      },
-      // CALLEE
-      async handleAnser() {
-        await this.setRemoteDescription(this.videoAnswer.remoteDesc); // Set remote description
-        this.createAnswer(); // Create the answer
-      },
       async getUserMedia() {
         if ("mediaDevices" in navigator) {
           try {
             const stream = await navigator.mediaDevices.getUserMedia(this.constraints);
-            this.$refs.localeVideo.srcObject = stream;
-            this.localStream = stream;
+            for (const track of stream.getTracks()) {
+              this.pc.addTrack(track, stream);
+            }
+            this.$refs.localeVideo.srcObject = stream
           } catch (error) {
-            console.log(`getUserMedia error: ${error}`);
+            console.error(`getUserMedia error: ${error}`);
           }
         }
       },
-      async createOffer() {
-        try {
-          const offer = await this.pc.createOffer() // Create offer
-          await this.pc.setLocalDescription(offer) // Add local description
-          this.sendSignalingMessage(this.pc.localDescription, true) // Send signaling message
-        } catch (error) {
-          log(`Error creating the offer from ${this.username}. Error: ${error}`);
-        }
-      },
-      async createAnswer() {
-        try {
-          const answer = await this.pc.createAnswer() // Create answer
-          await this.pc.setLocalDescription(answer) // Add local description
-          this.sendSignalingMessage(this.pc.localDescription, false) // Send signaling message
-        } catch (error) {
-          log(`Error creating the answer from ${this.username}. Error: ${error}`);
-        }
-      },
-      sendSignalingMessage(desc, offer) { // Send the offer to the other peer
-        this.$socket.emit("privateMessagePCSignaling", {
-          desc,
-          to: this.$store.getters.toUserId
-        });
-      },
-      setRemoteDescription(remoteDesc) {
-        this.pc.setRemoteDescription(remoteDesc);
-      },
-      addLocalStream() {
-        if (this.localStream) {
-          this.pc.addStream(this.localStream)
-        }
-      },
-      addCandidate(candidate) {
-        this.pc.addIceCandidate(candidate);
-      },
-      onIceCandidates() { // send any ice candidates to the other peer
+      onIceCandidate() {
         this.pc.onicecandidate = ({candidate}) => {
-          this.$socket.emit("privateMessagePCSignaling", {
-            candidate,
-            to: this.to,
-            from: this.$store.state.username,
-            room: this.room
+          this.$socket.emit('privateMessagePCSignaling', {
+            desc: this.pc.localDescription
           })
+          console.log(candidate, 'condidate')
         }
       },
-      onAddStream() { // Attach remote video track
-        this.pc.onaddstream = (event) => {
-          if (!this.remoteVideo.srcObject && event.stream) {
-            this.remoteStream = event.stream;
-            this.$refs.remoteVideo.srcObject = this.remoteStream;
+      onNegotiationNeeded() {
+        this.pc.onnegotiationneeded = async () => {
+          try {
+            let offer = await this.pc.createOffer()
+            await this.pc.setLocalDescription(offer)
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      },
+      onTrack () {
+        this.pc.ontrack = ({track, streams}) => {
+          track.onunmute = () => {
+              if (this.$refs.remoteVideo.srcObject) {
+                this.$refs.remoteView.srcObject = streams[0];
+              }
           }
         }
       }
@@ -140,16 +96,19 @@
           this.text = msg.txt
         }
       },
-      'privateMessagePCSignaling'({desc, from, candidate}) {
+      async 'privateMessagePCSignaling'({desc, from, candidate}) {
         try {
           // RECEIVING A DESCRIPTION
           if (desc) {
+            console.log(desc)
             // Incoming call
             if (desc.type === "offer") {
-              this.openChat(desc, from) // Open private chat
-              // Answer
+              if (!this.$refs.localeVideo.srcObject) {
+                await this.getUserMedia()
+              }
+              await this.pc.setLocalDescription()
             } else if (desc.type === "answer") {
-              this.videoAnswer = {...this.videoAnswer, remoteDesc: desc};
+              await this.pc.setRemoteDescription(desc)
             } else {
               console.log("Unsupported SDP type");
             }
@@ -163,15 +122,10 @@
       }
     },
     async created() {
-      await this.getUserMedia() // Get camera access
-
-      this.addLocalStream(); // Add local video stream
-      this.onIceCandidates(); // Add event listeners
-      this.onAddStream();
-
-      !this.videoAnswer.video ? // Handle logic
-        this.callFriend() : // Caller
-        this.handleAnser() // Callee
+      await this.getUserMedia();
+      await this.onIceCandidate();
+      await this.onNegotiationNeeded();
+      await this.onTrack();
     },
     async mounted() {
       await this.setUsers();
