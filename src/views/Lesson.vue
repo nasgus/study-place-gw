@@ -1,69 +1,169 @@
 <template lang="pug">
-  v-container
-    v-layout(row)
-      v-flex(row, xl12, lg12)
-        v-flex(xl10, lg10)
-          div lkel
-        v-flex(xl2, lg2)
-          v-img.border-img.mx-auto(:src="require('../assets/profile-photo.png')", max-width="150", max-height="150")
-          div.text-center Антон Мохонько
+    v-container
+        v-layout(row)
+            v-flex(row, xl12, lg12)
+                v-flex(xl10, lg10)
+                    video.video(autoplay, id="remote-video", ref="remoteVideo")
+                    video.video(autoplay, id="locale-video", ref="localeVideo")
+                v-flex(xl2, lg2)
+                    v-img.border-img.mx-auto(:src="require('../assets/profile-photo.png')", max-width="150", max-height="150")
+                    div.text-center Антон Мохонько
 
-      v-flex(xl12, lg12)
-        v-flex(xl10, lg10)
-          quill-editor(v-model="text", @keydown.native="onEditNotebook")
+            v-flex(xl12, lg12)
+                v-flex(xl10, lg10)
+                    quill-editor(v-model="text", @keydown.native="onEditNotebook")
 </template>
 
 <script>
-  import api from '../api'
+    import api from '../api'
+    import config from '../../rtcConfig'
 
+    export default {
+        name: "Lesson",
+        components: {},
+        props: {
+            contactId: [Number, String]
+        },
+        data() {
+            return {
+                text: '',
+                oldText: '',
+                pc: new RTCPeerConnection({iceServers: config}),
+                constraints: {audio: true, video: true},
+                videoCall: false,
+            }
+        },
+        methods: {
+            async setUsers() {
+                let res = await api.get(`/lessons/connect/${this.$route.params.lessonId}`)
+                this.$store.commit('SET_TO_USER_ID', res.data.you);
+                this.$store.commit('SET_FROM_USER_ID', res.data.me)
 
-  export default {
-    name: "Lesson",
-    components: {},
-    props: {
-      contactId: [Number, String]
-    },
-    data() {
-      return {
-        text: '',
-        oldText: ''
-      }
-    },
-    methods: {
-    },
-    computed: {
-      userId() {
-        return this.$store.getters.userId
-      },
-      onEditNotebook() {
-        return this._.debounce(() => {
-          this.$socket.emit('send-notebook-text', this.text, this.$route.params.lessonId);
-        }, 500)
-      }
-    },
-    sockets: {
-      'notebook-text'(msg) {
-        if (msg.txt !== this.text) {
-          this.text = msg.txt
+                this.caller = res.data.caller
+                this.me = res.data.me
+            },
+            async getUserMedia() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia(this.constraints);
+                    for (const track of stream.getTracks()) {
+                        this.pc.addTrack(track, stream)
+                    }
+                    this.$refs.localeVideo.srcObject = stream
+                } catch (e) {
+                    throw new Error(e)
+                }
+            },
+            onIceCandidate() {
+                this.pc.onicecandidate = ({candidate}) => {
+                    this.$socket.emit('privateMessagePCSignaling', {
+                        candidate,
+                        to: this.$store.getters.toUserId
+                    })
+                }
+            },
+            onTrack() {
+                this.pc.ontrack = ({track, streams}) => {
+                    track.onunmute = () => {
+                        // console.log(streams)
+                        if (!this.$refs.remoteVideo.srcObject) {
+                            console.log('remote')
+                            this.$refs.remoteVideo.srcObject = streams[0];
+                        }
+                    }
+
+                }
+            },
+            onNegotiationNeeded() {
+                this.pc.onnegotiationneeded = async () => {
+                    try {
+
+                        if (this.caller === this.me) {
+                            await this.pc.setLocalDescription(await this.pc.createOffer())
+
+                            this.$socket.emit('privateMessagePCSignaling', {
+                                desc: this.pc.localDescription,
+                                to: this.$store.getters.toUserId
+                            })
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+            }
+        },
+        computed: {
+            userId() {
+                return this.$store.getters.userId
+            },
+            onEditNotebook() {
+                return this._.debounce(() => {
+                    this.$socket.emit('send-notebook-text', this.text, this.$route.params.lessonId);
+                }, 500)
+            },
+        },
+        sockets: {
+            'notebook-text'(msg) {
+                if (msg.txt !== this.text) {
+                    this.text = msg.txt
+                }
+            },
+            async 'privateMessagePCSignaling'({desc, from, candidate, to}) {
+                try {
+                    if (desc) {
+                        console.log(desc.type)
+
+                        if (desc.type === 'offer') {
+                            // if (!this.$refs.localeVideo.srcObject) {
+                            //     await this.getUserMedia()
+                            // }
+
+                            await this.pc.setRemoteDescription(desc)
+                            await this.pc.setLocalDescription(await this.pc.createAnswer())
+
+                            this.$socket.emit('privateMessagePCSignaling', {
+                                desc: this.pc.localDescription,
+                                to: this.$store.getters.toUserId
+                            })
+                        } else if (desc.type === 'answer') {
+                            await this.pc.setRemoteDescription(desc)
+                        }
+                        // RECEIVING A CANDIDATE
+                    } else if (candidate) {
+                        await this.pc.addIceCandidate(candidate)
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
+        async created() {
+
+        },
+        async mounted() {
+            await this.setUsers();
+            await this.onNegotiationNeeded();
+            await this.getUserMedia();
+            await this.onIceCandidate();
+            await this.onTrack();
+            this.$socket.emit('join', this.$route.params.lessonId, this.userId);
         }
-      }
-    },
-    mounted() {
-      this.$socket.emit('join', this.$route.params.lessonId, this.userId);
     }
-  }
 </script>
 
 <style>
-  .border-img {
-    border-radius: 30px;
-  }
+    .border-img {
+        border-radius: 30px;
+    }
 
-  .text-editor {
-    height: 500px;
-  }
-
-  .trix-content {
-    height: 500px;
-  }
+    .video {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+    }
 </style>
+
+<!--this.$socket.emit('privateMessagePCSignaling', {-->
+<!--desc: this.pc.localDescription,-->
+<!--to: this.$store.getters.toUserId,-->
+<!--from: this.$store.getters.fromUserId-->
+<!--})-->

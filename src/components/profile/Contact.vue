@@ -66,6 +66,7 @@
 
         this.$store.commit('SET_LESSON_ID', lesson.uniqueLessonId);
         this.$store.commit('SET_OUTGOING_USER', this.fullName);
+        this.$store.commit('SET_TO_USER_ID', this.userId);
 
         this.$socket.emit('invite-to-lesson', {
           lessonId: lesson.uniqueLessonId,
@@ -75,8 +76,6 @@
         });
 
         this.$store.commit('SET_OUTGOING_LESSON_POPUP', true)
-
-        // this.$router.push({name: 'lesson', params: {lessonId: lesson.uniqueLessonId}}, () => {})
       }
     },
     computed: {
