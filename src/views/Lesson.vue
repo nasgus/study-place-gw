@@ -113,10 +113,6 @@
                         console.log(desc.type)
 
                         if (desc.type === 'offer') {
-                            // if (!this.$refs.localeVideo.srcObject) {
-                            //     await this.getUserMedia()
-                            // }
-
                             await this.pc.setRemoteDescription(desc)
                             await this.pc.setLocalDescription(await this.pc.createAnswer())
 
@@ -161,9 +157,3 @@
         border: 1px solid black;
     }
 </style>
-
-<!--this.$socket.emit('privateMessagePCSignaling', {-->
-<!--desc: this.pc.localDescription,-->
-<!--to: this.$store.getters.toUserId,-->
-<!--from: this.$store.getters.fromUserId-->
-<!--})-->
