@@ -10,9 +10,7 @@
   import router from './router'
 
   axios.interceptors.response.use(function (config) {
-    console.log(config)
     if (config.headers.authorized) {
-      console.log(config.headers.authorized)
       store.commit('SET_USER_ID', config.headers.authorized)
     }
     return config;
@@ -21,7 +19,6 @@
     router.push({name: 'main'}, () => {
     });
     store.commit('DELETE_USER', null)
-    // Do something with request error
     return Promise.reject(error);
   });
 
