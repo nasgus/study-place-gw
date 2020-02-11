@@ -17,13 +17,14 @@
             v-btn(icon, v-on="on")
               v-icon() mdi-dots-vertical
           v-list
-            v-list-item(v-for="(item, index) in menu", @click="goTo(item.to)", :key="index")
+            v-list-item(v-for="(item, index) in menu", @click="routeOrDo(item)", :key="index")
               v-list-item-title {{ item.title }}
 </template>
 
 <script>
   import LoginModal from "../components/header/LoginModal";
   import Dropdown from "../components/header/Dropdown";
+  import api from '../api'
 
   export default {
     name: "Header",
@@ -32,15 +33,33 @@
       return {
         dropdownActive: false,
         authorized: true,
-        menu: [{title: 'Профиль', to: 'profile'}, {title: 'Дневник', to: 'diary'}, {title: 'Контакты', to: 'contacts'}]
+        menu: [{title: 'Профиль', to: 'profile'}, {title: 'Дневник', to: 'diary'}, {
+          title: 'Контакты',
+          to: 'contacts'
+        }, {title: 'Выйти', do: 'logout'}]
       }
     },
     methods: {
       openModal() {
         this.$store.commit('OPEN_LOGIN_MODAL', true)
       },
-      goTo(to) {
-        this.$router.push({name: to}, () => {})
+      routeOrDo(item) {
+        if (item.to) {
+          this.$router.push({name: item.to}, () => {
+          })
+        } else if (item.do) {
+          this[item.do]()
+        }
+      },
+      logout() {
+        api.delete('/users/logout')
+          .then(res => {
+            this.$store.commit('DELETE_USER', null)
+            this.$router.push({name: 'main'}, () => {})
+          })
+          .catch(err => {
+            throw new Error(err)
+          })
       }
     },
     computed: {

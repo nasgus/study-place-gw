@@ -12,13 +12,13 @@
   axios.interceptors.response.use(function (config) {
     if (config.headers.authorized) {
       store.commit('SET_USER_ID', config.headers.authorized)
-    } else {
-      router.push({name: 'main'}, () => {});
-      store.commit('SET_USER_ID', null)
     }
     return config;
   }, function (error) {
-    // Do something with request error
+    console.log(error)
+    router.push({name: 'main'}, () => {
+    });
+    store.commit('DELETE_USER', null)
     return Promise.reject(error);
   });
 
@@ -28,9 +28,13 @@
     },
     created() {
       axios.get('/auth')
-      .then((res) => {
-        this.$store.commit('SET_PROFILE', res.data)
-      })
+        .then((res) => {
+          this.$store.commit('SET_PROFILE', res.data);
+        })
+        .catch(e => {
+          this.$router.push({name: 'main'});
+
+        })
     }
   }
 </script>
