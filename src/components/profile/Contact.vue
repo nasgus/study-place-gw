@@ -8,7 +8,7 @@
           v-list-item-subtitle {{education}}
         v-list-item-action
           v-layout
-            v-btn(icon, @click="goToLesson()")
+            v-btn(icon, @click="inviteToLesson()")
               v-icon mdi-phone-in-talk
             v-btn(icon)
               v-icon mdi-account
@@ -51,6 +51,11 @@
         default: true
       }
     },
+    data () {
+      return {
+        lessonTitle: ''
+      }
+    },
     methods: {
       acceptFriend() {
         api.post('/friends/accept', {friendId: this.userId})
@@ -61,18 +66,23 @@
       declineFriend() {
 
       },
-      async goToLesson() {
-        let lesson = (await api.post('/lessons/create', {incomingUser: this.userId})).data;
 
-        this.$store.commit('SET_LESSON_ID', lesson.uniqueLessonId);
+      inviteToLesson () {
         this.$store.commit('SET_OUTGOING_USER', this.fullName);
         this.$store.commit('SET_TO_USER_ID', this.userId);
+        this.$store.commit('SET_OUTGOING_LESSON_POPUP', true)
+      },
+
+      async call() {
+        let lesson = (await api.post('/lessons/create', {incomingUser: this.userId, title: this.lessonTitle})).data;
+
+        this.$store.commit('SET_LESSON_ID', lesson.uniqueLessonId);
 
         this.$socket.emit('invite-to-lesson', {
           lessonId: lesson.uniqueLessonId,
           fromFullName: this.myFullName,
           fromUserId: this.myUserId,
-          to: this.userId
+          to: this.userId,
         });
 
         this.$store.commit('SET_OUTGOING_LESSON_POPUP', true)
