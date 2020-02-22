@@ -22,3 +22,4 @@ export const SET_LESSON_ID = 'SET_LESSON_ID';
 export const SET_FROM_USER_ID = 'SET_FROM_USER_ID';
 export const SET_TO_USER_ID = 'SET_TO_USER_ID';
 export const SET_LESSON_TITLE = 'SET_LESSON_TITLE';
+export const SET_LESSON = 'SET_LESSON';

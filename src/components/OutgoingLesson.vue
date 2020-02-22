@@ -1,9 +1,9 @@
 <template lang="pug">
   v-row(justify="center")
-    v-dialog(v-model="lesson.outgoingLesson", persistent, max-width="290")
+    v-dialog(v-model="lesson.outgoingLesson", persistent, max-width="400")
       v-card
-        v-card-title {{`Приглашение для: ${lesson.toFullName}`}}
-        v-text-field(v-model="lessonTitle", label="Тема занятия",)
+        v-card-text {{`Приглашение для: ${lesson.toFullName}`}}
+        v-text-field.mx-5(v-model="lessonTitle", label="Тема занятия",)
         v-card-actions
           v-btn(@click="call()") Пригласить
           v-btn Отменить
@@ -31,6 +31,9 @@
       },
       myUserId() {
         return this.$store.getters.userId
+      },
+      myFullName() {
+        return this.$store.getters.getFullName
       }
     },
     methods: {
@@ -43,7 +46,7 @@
           lessonId: lesson.uniqueLessonId,
           fromFullName: this.myFullName,
           fromUserId: this.myUserId,
-          to: this.userId,
+          to: this.lesson.toUserId,
           title: this.lessonTitle
         });
 

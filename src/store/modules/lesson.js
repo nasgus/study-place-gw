@@ -6,7 +6,8 @@ import {
   SET_OUTGOING_LESSON_POPUP,
   SET_FROM_USER_ID,
   SET_TO_USER_ID,
-  SET_LESSON_TITLE
+  SET_LESSON_TITLE,
+  SET_LESSON
 } from '../mutation-types'
 
 export default {
@@ -46,6 +47,12 @@ export default {
     },
     [SET_LESSON_TITLE](state, payload) {
       state.title = payload
+    },
+    [SET_LESSON](state, payload) {
+      state.title = payload.title;
+      state.lessonId = payload.lessonId;
+      state.fromFullName = payload.fromFullName;
+      state.fromUserId = payload.fromUserId;
     }
   },
 
