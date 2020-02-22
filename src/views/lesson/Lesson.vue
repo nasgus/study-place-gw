@@ -6,7 +6,7 @@
                     video.video(autoplay, id="remote-video", ref="remoteVideo")
                     video.video(autoplay, id="locale-video", ref="localeVideo")
                 v-flex(xl2, lg2)
-                    v-img.border-img.mx-auto(:src="require('../assets/profile-photo.png')", max-width="150", max-height="150")
+                    v-img.border-img.mx-auto(:src="require('../../assets/profile-photo.png')", max-width="150", max-height="150")
                     div.text-center Антон Мохонько
 
             v-flex(xl12, lg12)
@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import api from '../api'
-    import config from '../../rtcConfig'
+    import api from '../../api'
+    import config from '../../../rtcConfig'
 
     export default {
         name: "Lesson",

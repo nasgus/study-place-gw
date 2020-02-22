@@ -33,7 +33,7 @@
       return {
         dropdownActive: false,
         authorized: true,
-        menu: [{title: 'Профиль', to: 'profile'}, {title: 'Дневник', to: 'diary'}, {
+        menu: [{title: 'Профиль', to: 'profile'}, {title: 'Мои уроки', to: 'lessons'}, {title: 'Дневник', to: 'diary'}, {
           title: 'Контакты',
           to: 'contacts'
         }, {title: 'Выйти', do: 'logout'}]
