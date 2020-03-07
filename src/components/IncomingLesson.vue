@@ -2,8 +2,10 @@
   v-row(justify="center")
     v-dialog(v-model="incomingLessonPopup", persistent, max-width="290")
       v-card
-        v-card-title Incoming lesson from:
-          | {{fromFullName}}
+        v-card-title Приглошение на урок от:
+          | {{lesson.fromFullName}}
+        v-card-text Тема урока:
+          | {{lesson.title}}
         v-card-actions
           v-spacer
           v-btn(color="green darken-1", text, @click="acceptInvite()") Accept
@@ -28,6 +30,9 @@
       },
       fromUserId() {
         return this.$store.getters.fromUserId
+      },
+      lesson() {
+        return this.$store.getters.lesson
       }
     },
     methods: {

@@ -17,9 +17,7 @@
     components: {OutgoingLesson, IncomingLesson, LoginModal, Header},
     sockets: {
       'incoming-call'(payload) {
-        this.$store.commit('SET_OUTGOING_USER', payload);
-        this.$store.commit('SET_LESSON_ID', payload.lessonId);
-        this.$store.commit('SET_FROM_USER_ID', payload.fromUserId);
+        this.$store.commit('SET_LESSON', payload);
         this.$store.commit('SET_INCOMING_LESSON_POPUP', true);
         console.log(payload)
       },

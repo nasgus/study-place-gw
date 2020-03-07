@@ -5,7 +5,9 @@ import {
   SET_LESSON_ID,
   SET_OUTGOING_LESSON_POPUP,
   SET_FROM_USER_ID,
-  SET_TO_USER_ID
+  SET_TO_USER_ID,
+  SET_LESSON_TITLE,
+  SET_LESSON
 } from '../mutation-types'
 
 export default {
@@ -16,7 +18,8 @@ export default {
     fromFullName: '',
     toFullName: '',
     fromUserId: '',
-    toUserId: ''
+    toUserId: '',
+    title: ''
   },
 
   mutations: {
@@ -41,6 +44,15 @@ export default {
     },
     [SET_TO_USER_ID](state, payload) {
       state.toUserId = payload
+    },
+    [SET_LESSON_TITLE](state, payload) {
+      state.title = payload
+    },
+    [SET_LESSON](state, payload) {
+      state.title = payload.title;
+      state.lessonId = payload.lessonId;
+      state.fromFullName = payload.fromFullName;
+      state.fromUserId = payload.fromUserId;
     }
   },
 
@@ -51,6 +63,8 @@ export default {
     fromFullName: state => state.fromFullName,
     toFullName: state => state.toFullName,
     toUserId: state => state.toUserId,
-    fromUserId: state => state.fromUserId
+    fromUserId: state => state.fromUserId,
+    lesson: state => state,
+    lessonTitle: state => state.title
   }
 }

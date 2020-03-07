@@ -8,7 +8,7 @@
           button.main-text__btn
             div.main-text__btn-text Стать участником
         v-flex.xl6.lg6
-          img(:src="require('../assets/main/main.gif')")
+          //img(:src="require('../assets/main/main.gif')")
     //div.main-footer
       div.container
         div.main-footer__title.has-text-centered Почему стоит присоединиться к нам?
