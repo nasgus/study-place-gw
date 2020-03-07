@@ -8,12 +8,16 @@
           v-spacer
           div {{lesson.createdAt}}
         v-expansion-panel-content
-          div kek
+          div {{lesson.uniqueLessonId}}
+          a(@click="downloadNotebook(lesson.uniqueLessonId)") download
 
 </template>
 
 <script>
   import api from '../../api'
+  import { asBlob } from 'html-docx-js-typescript'
+  import { saveAs } from 'file-saver'
+
 
   export default {
     name: "Lessons",
@@ -22,10 +26,18 @@
         list: []
       }
     },
+    methods: {
+      async downloadNotebook(uniqueLessonId) {
+        const res = await api.get(`/lessons/notebook/${uniqueLessonId}`)
+        const fileData = await asBlob(res.data) // asBlob() return Promise<Blob|Buffer>
+        saveAs(fileData, `${uniqueLessonId}.docx`) // save as docx file
+      }
+    },
     created() {
       api.get('/lessons')
         .then(res => {
           this.list = res.data
+
         })
     }
   }

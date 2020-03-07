@@ -13,6 +13,8 @@
     "connect-history-api-fallback": "^1.6.0",
     "core-js": "^2.6.5",
     "express": "^4.17.1",
+    "file-saver": "^2.0.2",
+    "html-docx-js-typescript": "^0.1.2",
     "path": "^0.12.7",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
