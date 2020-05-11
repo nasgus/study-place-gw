@@ -42,7 +42,7 @@
             this.$store.commit('SET_TO_USER_ID', res.data.you);
             this.$store.commit('SET_FROM_USER_ID', res.data.me)
 
-            this.caller = res.data.you
+            this.caller = res.data.caller
             this.me = res.data.me
           })
       },
@@ -78,6 +78,7 @@
       },
       onNegotiationNeeded() {
         this.pc.onnegotiationneeded = async () => {
+          console.log(this.caller === this.me, "caller")
           try {
             if (this.caller === this.me) {
               await this.pc.setLocalDescription(await this.pc.createOffer())
@@ -113,6 +114,7 @@
         }
       },
       async 'privateMessagePCSignaling'({desc, from, candidate, to}) {
+        console.log("here")
         try {
           if (desc) {
             if (desc.type === 'offer') {
